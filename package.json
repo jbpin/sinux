@@ -8,6 +8,10 @@
     "test": "mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm test -- --watch"
   },
+  "repository" : {
+    "type" : "git",
+    "url" : "git+https://github.com/jbpin/sinux.git"
+  },
   "keywords": [
     "flux",
     "signal",
@@ -19,7 +23,10 @@
     "sinux",
     "generator"
   ],
-  "author": "jbpin",
+  "author": "jbpin<jibet.pin@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/jbpin/sinux/issues"
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.3.17",
