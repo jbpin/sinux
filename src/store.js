@@ -9,6 +9,9 @@ export default class Store {
   addSignals(signals) {
     signals = [].concat(signals);
     signals.forEach((signal) => {
+      if(this[signal]){
+        return;
+      }
       let s = new Signal();
       this[signal] = (...args) => {
         return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((payload) => {
@@ -24,6 +27,7 @@ export default class Store {
   }
 
   updateState(payload) {
-    this.state = {...state, ...payload};
+    this.state = {...this.state, ...payload};
+    // dispatch update;
   }
 }

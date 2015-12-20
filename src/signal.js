@@ -2,21 +2,28 @@ import co from 'co';
 
 class Signal {
 
-  constructor(){
-    this.commands = new Set();
+  constructor(name){
+    this.name = name;
+    this.commands = [];
   }
 
   add(command){
-    this.commands.add(command)
+    if(this.commands.indexOf(command) === -1){
+      this.commands.push(command)
+    }
   }
 
   dispatch(...args) {
     // compute listener promise
+    var commands = this.commands
     return co(function* (){
-      for(let c in this.commands){
-        yield c.execute(...args);
+      var result = {}
+      for (let i =  0; i < commands.length; i++) {
+        let r = yield commands[i].execute(...args)
+        result = {...result, ...r}
       }
-    })//.catch(onError);
+      return result
+    }).catch((e) => console.log('error', e))
   }
 
   remove(command) {

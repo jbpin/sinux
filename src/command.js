@@ -6,8 +6,8 @@ class Command {
     signal.add(this);
   }
 
-  execute(store, ...args) {
-    return co(this.fx.call(store.getState(), ...args)).then((payload) => store.update(payload));
+  execute(...args) {
+    return co(this.fx, ...args);
   }
 }
 
