@@ -2,7 +2,7 @@
   "name": "sinux",
   "version": "0.0.1",
   "description": "Facebook Flux architecture implementation based on self dispatching actions and commands",
-  "main": "index.js",
+  "main": "dist/sinux.js",
   "scripts": {
     "build": "webpack",
     "test": "mocha --compilers js:babel-core/register --recursive",
