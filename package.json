@@ -1,7 +1,7 @@
 {
   "name": "sinux",
   "version": "0.0.1",
-  "description": "Flux implementation inspired by signal from Robert Penner and Robotleg AS3 framework",
+  "description": "Facebook Flux architecture implementation based on self dispatching actions and commands",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -23,7 +23,7 @@
     "sinux",
     "generator"
   ],
-  "author": "jbpin<jibet.pin@gmail.com>",
+  "author": "jbpin<jeanbaptiste.pin@gmail.com>",
   "bugs": {
     "url": "https://github.com/jbpin/sinux/issues"
   },
