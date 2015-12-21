@@ -7,12 +7,12 @@ class Signal {
       throw new Error('Signal name is mandatory');
     }
     this.name = name;
-    this.commands = [];
+    this.commands = new Set();
   }
 
   add(command){
-    if(this.commands.indexOf(command) === -1){
-      this.commands.push(command)
+    if(!this.commands.has(command)){
+      this.commands.add(command)
     }
   }
 
@@ -21,8 +21,13 @@ class Signal {
     var commands = this.commands
     return co(function* (){
       var result = {}
-      for (let i =  0; i < commands.length; i++) {
-        let r = yield commands[i].execute(...args)
+      for (let c of commands) {
+        let r = null;
+        if(c.execute){
+          r = yield c.execute(...args)
+        }else{
+          r = c(...args)
+        }
         result = {...result, ...r}
       }
       return result
@@ -30,7 +35,7 @@ class Signal {
   }
 
   remove(command) {
-    _commands.delete(command);
+    this.commands.delete(command);
   }
 }
 

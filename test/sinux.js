@@ -1,3 +1,4 @@
+import "babel-polyfill"
 import co from 'co'
 import {expect} from 'chai'
 import {Store, Signal, Command} from '../index'
@@ -51,7 +52,8 @@ describe('Store', () => {
       return {...state, ...args}
     })
 
-    s.test(s2.test).then( function(value) {
+    s.test(s2.test);
+    s.changed.add(function (value) {
       try{
         expect(s.getState()).to.be.deep.equal({foo:'bar'})
         expect(s2.getState()).to.be.deep.equal({store:2})
@@ -60,13 +62,57 @@ describe('Store', () => {
       }catch(e){
         done(e)
       }
-    }, function (e) {
-      done(e)
+    })
+  })
+
+  it('should update the state', function(done) {
+    let s = new Store({test:2}, 'test');
+    let c = new Command(s.test, (state, args) => { return {...state, ...args} })
+    s.test({foo:"bar"})
+    s.changed.add(function (value) {
+      try{
+        expect(s.getState()).to.be.deep.equal({test:2, foo:'bar'})
+        done()
+      }catch(e){
+        done(e)
+      }
+    })
+  })
+
+  it('should update the state and dispatch an changed signal', function(done) {
+    let s = new Store({test:2}, 'test');
+    let c = new Command(s.test, (state, args) => { return {...state, ...args} })
+    s.test({foo:"bar"});
+    s.changed.add(function (value) {
+      try{
+        expect(s.getState()).to.be.deep.equal({test:2, foo:'bar'})
+        done()
+      }catch(e){
+        done(e)
+      }
+    })
+  })
+
+  it('should support async command', function(done) {
+    let s = new Store({test:3}, 'test');
+    let c = new Command(s.test, (state, args) => {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function() { resolve({...state, ...args}) }, 100);
+      })
+    })
+    s.test({foo:"bar"})
+    s.changed.add(function (value) {
+      try{
+        expect(s.getState()).to.be.deep.equal({test:3, foo:'bar'});
+        done()
+      }catch(e) {
+        done(e)
+      }
     })
   })
 })
 
-describe('Command mapping', function() {
+describe('Command', function() {
   it('should create a command', function() {
     let s = new Store({}, 'test');
     let c = new Command(s.test, (state, args) => { return {...state, ...args} })
@@ -78,30 +124,6 @@ describe('Command mapping', function() {
     var p = c.execute({foo:"bar"});
     p.then((value)=> {
       expect(value).to.be.deep.equal({foo:'bar'})
-      done()
-    })
-  })
-
-  it('should update the state', function(done) {
-    let s = new Store({test:2}, 'test');
-    let c = new Command(s.test, (state, args) => { return {...state, ...args} })
-    s.test({foo:"bar"}).then( function(value) {
-      expect(s.getState()).to.be.deep.equal({test:2, foo:'bar'})
-      done()
-    }, function (e) {
-      done(e)
-    })
-  })
-
-  it('should support async command', function(done) {
-    let s = new Store({test:3}, 'test');
-    let c = new Command(s.test, (state, args) => {
-      return new Promise(function (resolve, reject) {
-        setTimeout(function() { resolve({...state, ...args}) }, 100);
-      })
-    })
-    s.test({foo:"bar"}).then( function() {
-      expect(s.getState()).to.be.deep.equal({test:3, foo:'bar'});
       done()
     })
   })
@@ -117,5 +139,23 @@ describe('Signal', function() {
     s.dispatch('test').then(value => {
       done()
     })
+  })
+
+  it('should remove a listener', function(){
+    let s = new Signal('test');
+    let fn = function(){};
+    s.add(fn)
+    expect(s.commands.has(fn)).to.be.true;
+    s.remove(fn)
+    expect(s.commands.has(fn)).to.be.false;
+  })
+
+  it('should not add an already added command', function(){
+    let s = new Signal('test');
+    let fn = function(){};
+    s.add(fn)
+    expect(s.commands.has(fn)).to.be.true;
+    s.add(fn)
+    expect(s.commands.size).to.be.equal(1);
   })
 });

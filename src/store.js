@@ -3,6 +3,9 @@ import Signal from './signal'
 export default class Store {
   constructor(initialState, ...signals){
     this.state = initialState;
+    // signal for the store
+    this.changed = new Signal('storeUpdated');
+
     this.addSignals(...signals);
   }
 
@@ -33,6 +36,6 @@ export default class Store {
 
   updateState(payload) {
     this.state = {...this.state, ...payload};
-    // dispatch update;
+    this.changed.dispatch(this.getState());
   }
 }

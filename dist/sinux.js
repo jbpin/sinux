@@ -150,14 +150,14 @@ module.exports =
 	      throw new Error('Signal name is mandatory');
 	    }
 	    this.name = name;
-	    this.commands = [];
+	    this.commands = new Set();
 	  }
 
 	  _createClass(Signal, [{
 	    key: 'add',
 	    value: function add(command) {
-	      if (this.commands.indexOf(command) === -1) {
-	        this.commands.push(command);
+	      if (!this.commands.has(command)) {
+	        this.commands.add(command);
 	      }
 	    }
 	  }, {
@@ -170,43 +170,95 @@ module.exports =
 	      // compute listener promise
 	      var commands = this.commands;
 	      return (0, _co2.default)(regeneratorRuntime.mark(function _callee() {
-	        var result, i, _commands$i, r;
+	        var result, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, c, r;
 
 	        return regeneratorRuntime.wrap(function _callee$(_context) {
 	          while (1) {
 	            switch (_context.prev = _context.next) {
 	              case 0:
 	                result = {};
-	                i = 0;
+	                _iteratorNormalCompletion = true;
+	                _didIteratorError = false;
+	                _iteratorError = undefined;
+	                _context.prev = 4;
+	                _iterator = commands[Symbol.iterator]();
 
-	              case 2:
-	                if (!(i < commands.length)) {
-	                  _context.next = 10;
+	              case 6:
+	                if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+	                  _context.next = 20;
 	                  break;
 	                }
 
-	                _context.next = 5;
-	                return (_commands$i = commands[i]).execute.apply(_commands$i, args);
+	                c = _step.value;
+	                r = null;
 
-	              case 5:
+	                if (!c.execute) {
+	                  _context.next = 15;
+	                  break;
+	                }
+
+	                _context.next = 12;
+	                return c.execute.apply(c, args);
+
+	              case 12:
 	                r = _context.sent;
-
-	                result = _extends({}, result, r);
-
-	              case 7:
-	                i++;
-	                _context.next = 2;
+	                _context.next = 16;
 	                break;
 
-	              case 10:
+	              case 15:
+	                r = c.apply(undefined, args);
+
+	              case 16:
+	                result = _extends({}, result, r);
+
+	              case 17:
+	                _iteratorNormalCompletion = true;
+	                _context.next = 6;
+	                break;
+
+	              case 20:
+	                _context.next = 26;
+	                break;
+
+	              case 22:
+	                _context.prev = 22;
+	                _context.t0 = _context['catch'](4);
+	                _didIteratorError = true;
+	                _iteratorError = _context.t0;
+
+	              case 26:
+	                _context.prev = 26;
+	                _context.prev = 27;
+
+	                if (!_iteratorNormalCompletion && _iterator.return) {
+	                  _iterator.return();
+	                }
+
+	              case 29:
+	                _context.prev = 29;
+
+	                if (!_didIteratorError) {
+	                  _context.next = 32;
+	                  break;
+	                }
+
+	                throw _iteratorError;
+
+	              case 32:
+	                return _context.finish(29);
+
+	              case 33:
+	                return _context.finish(26);
+
+	              case 34:
 	                return _context.abrupt('return', result);
 
-	              case 11:
+	              case 35:
 	              case 'end':
 	                return _context.stop();
 	            }
 	          }
-	        }, _callee, this);
+	        }, _callee, this, [[4, 22, 26, 34], [27,, 29, 33]]);
 	      })).catch(function (e) {
 	        return console.log('Signal error', e);
 	      });
@@ -214,7 +266,7 @@ module.exports =
 	  }, {
 	    key: 'remove',
 	    value: function remove(command) {
-	      _commands.delete(command);
+	      this.commands.delete(command);
 	    }
 	  }]);
 
@@ -250,6 +302,8 @@ module.exports =
 	    _classCallCheck(this, Store);
 
 	    this.state = initialState;
+	    // signal for the store
+	    this.changed = new _signal2.default('storeUpdated');
 
 	    for (var _len = arguments.length, signals = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
 	      signals[_key - 1] = arguments[_key];
@@ -301,7 +355,7 @@ module.exports =
 	    key: 'updateState',
 	    value: function updateState(payload) {
 	      this.state = _extends({}, this.state, payload);
-	      // dispatch update;
+	      this.changed.dispatch(this.getState());
 	    }
 	  }]);
 
