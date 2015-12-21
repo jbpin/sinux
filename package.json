@@ -4,6 +4,7 @@
   "description": "Facebook Flux architecture implementation based on self dispatching actions and commands",
   "main": "dist/sinux.js",
   "scripts": {
+    "prepublish": "npm run build",
     "build": "webpack",
     "test": "mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm test -- --watch"

@@ -15,8 +15,19 @@ npm install -S sinux
 
 ## Usage
 
+Using babel6 with es2015
+
+add to your package.json script tags
+
+```
+"scripts": {
+  ...
+  "start": "babel-node index.js",
+  ...
+}
+```
+
 ```javascript
-// es2015
 import {Store, Command} from sinux
 
 const store = new Store({initialState: true}, 'action','action2')
@@ -25,8 +36,13 @@ new Command(store.action, (state, ...args)=> {...state, ...args} )
 
 store.action({foo:'bar'}).then(()=> console.log(store.getState())) 
 // {initialState: true, foo:'bar'}
+```
 
-// es3
+Using ES3
+
+```javascript
+// polyfill is required because of generator function, only import it once in your main script
+require('babel-polyfill');
 var sinux = require('sinux');
 
 var Store = sinux.Store;
