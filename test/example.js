@@ -4,7 +4,7 @@ import Signal from '../src/signal'
 import Store from '../src/store'
 import {expect} from 'chai'
 
-describe.only('Contact exemple', function() {
+describe('Contact exemple', function() {
   it('should have a store', function(){
     expect(contactStore.getState()).to.be.ok;
   })
