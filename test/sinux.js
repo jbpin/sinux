@@ -13,6 +13,11 @@ describe('Store', () => {
     expect(new Store({}, 'test')).to.have.property('test').that.is.an.instanceof(Signal).and.is.a('function')
   })
 
+  it('should create a store with signal object', function() {
+    let s = new Store({test:1}, new Signal('test'))
+    expect(s).to.have.property('test').that.is.an.instanceof(Signal).and.is.a('function')
+  })
+
   it('should expose a signal that return a promise', function() {
     let s = new Store({}, 'test');
     let p = s.test.dispatch();
@@ -59,7 +64,7 @@ describe('Command mapping', function() {
     let s = new Store({test:3}, 'test');
     let c = new Command(s.test, (state, args) => {
       return new Promise(function (resolve, reject) {
-        setTimeout(function() { resolve({...state, ...args}) }, 1000);
+        setTimeout(function() { resolve({...state, ...args}) }, 100);
       })
     })
     s.test({foo:"bar"}).then( function() {
@@ -75,7 +80,7 @@ describe('Signal', function() {
   })
 
   it('should process command when is dispatch', function(done) {
-    let s = new Signal();
+    let s = new Signal('test');
     let c = new Command(s, test => {
       return test;
     })

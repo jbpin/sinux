@@ -9,16 +9,22 @@ export default class Store {
   addSignals(signals) {
     signals = [].concat(signals);
     signals.forEach((signal) => {
-      if(this[signal]){
+      let s = signal;
+      let name = signal;
+      if(s instanceof Signal) {
+        name = s.name;
+      }else{
+        s = new Signal(signal);
+      }
+      if(this[name]){
         return;
       }
-      let s = new Signal();
-      this[signal] = (...args) => {
+      this[name] = (...args) => {
         return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((payload) => {
           this.updateState(payload);
         });
       };
-      this[signal].__proto__ = s;
+      this[name].__proto__ = s;
     })
   }
 
