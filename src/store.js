@@ -18,7 +18,6 @@ export default class Store {
       if(this[name]){
         return;
       }
-
       this[name] = (...args) => {
         return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((payload) => {
           this.updateState(payload);
