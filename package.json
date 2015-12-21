@@ -8,9 +8,9 @@
     "test": "mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm test -- --watch"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "git+https://github.com/jbpin/sinux.git"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbpin/sinux.git"
   },
   "keywords": [
     "flux",

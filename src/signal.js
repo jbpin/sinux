@@ -3,6 +3,9 @@ import co from 'co';
 class Signal {
 
   constructor(name){
+    if(!name){
+      throw new Error('Signal name is mandatory');
+    }
     this.name = name;
     this.commands = [];
   }

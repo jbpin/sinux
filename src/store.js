@@ -2,23 +2,29 @@ import Signal from './signal'
 
 export default class Store {
   constructor(initialState, ...signals){
-    this.state = {...initialState};
-    this.addSignals(signals);
+    this.state = initialState;
+    this.addSignals(...signals);
   }
 
-  addSignals(signals) {
-    signals = [].concat(signals);
+  addSignals(...signals) {
     signals.forEach((signal) => {
-      if(this[signal]){
+      let s = signal;
+      let name = signal;
+      if('string' === typeof s) {
+        s = new Signal(name);
+      }else{
+        name = s.name || s.__proto__.name;
+      }
+      if(this[name]){
         return;
       }
-      let s = new Signal();
-      this[signal] = (...args) => {
+
+      this[name] = (...args) => {
         return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((payload) => {
           this.updateState(payload);
         });
       };
-      this[signal].__proto__ = s;
+      this[name].__proto__ = s;
     })
   }
 
