@@ -1,4 +1,3 @@
-require("babel-polyfill");
 import co from 'co'
 import {expect} from 'chai'
 import {Store, Signal, Command} from '../index'
@@ -20,7 +19,7 @@ describe('Store', () => {
 
   it('should expose a signal that return a promise', function() {
     let s = new Store({}, 'test');
-    let p = s.test.dispatch();
+    let p = s.test();
     expect(p).to.have.property('then').that.is.a('function')
   })
 
@@ -75,8 +74,7 @@ describe('Command mapping', function() {
   })
 
   it('should return a promise on execute', function(done) {
-    let s = new Store({}, 'test');
-    let c = new Command(s.test, (state, args) => { return {...state, ...args} })
+    let c = new Command(new Signal('test'), (state, args) => { return {...state, ...args} })
     var p = c.execute({foo:"bar"});
     p.then((value)=> {
       expect(value).to.be.deep.equal({foo:'bar'})
@@ -110,9 +108,6 @@ describe('Command mapping', function() {
 });
 
 describe('Signal', function() {
-  it('should work', function(done){
-    co(function() { return true; }).then(value => done())
-  })
 
   it('should process command when is dispatch', function(done) {
     let s = new Signal('test');
