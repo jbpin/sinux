@@ -79,6 +79,12 @@ new Command(store.action, (state, ...args) => {
 })
 ```
 
+## Exemple using Sinux with React Native
+
+Here is a simple todo app made with Sinux and React Native. 
+todoStore.load show how to do asynchronous call
+[View source](https://gist.github.com/jbpin/ef823ce565baad0ac913)
+
 ## License
 MIT
 
