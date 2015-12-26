@@ -1,4 +1,6 @@
 # Sinux
+
+[![Join the chat at https://gitter.im/jbpin/sinux](https://badges.gitter.im/jbpin/sinux.svg)](https://gitter.im/jbpin/sinux?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 > Sinux is a Facebook Flux architecture implementation inspired by [signal-as3](https://github.com/robertpenner/as3-signals) and [SignalMapCommand](https://github.com/joelhooks/signals-extensions-CommandSignal) extension for [Robotlegs](http://www.robotlegs.org/).
 Sinux use [co](https://github.com/tj/co) library
 
