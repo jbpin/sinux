@@ -4,6 +4,7 @@ Sinux use [co](https://github.com/tj/co) library
 
 [![npm version](https://img.shields.io/npm/v/sinux.svg?style=flat-square)](https://www.npmjs.com/package/sinux)
 [![npm downloads](https://img.shields.io/npm/dm/sinux.svg?style=flat-square)](https://www.npmjs.com/package/sinux)
+[![Join the chat at https://gitter.im/jbpin/sinux](https://badges.gitter.im/jbpin/sinux.svg)](https://gitter.im/jbpin/sinux?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Installation
 
