@@ -6,6 +6,9 @@ Sinux use [co](https://github.com/tj/co) library
 [![npm downloads](https://img.shields.io/npm/dm/sinux.svg?style=flat-square)](https://www.npmjs.com/package/sinux)
 [![Join the chat at https://gitter.im/jbpin/sinux](https://badges.gitter.im/jbpin/sinux.svg)](https://gitter.im/jbpin/sinux?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## Philosophy behind Sinux
+Read [this article on Medium](https://medium.com/@jbpin/why-do-i-write-sinux-a-flux-inspired-library-for-react-native-80e2ccce031c)
+
 ## Installation
 
 Sinux is available on NPM
