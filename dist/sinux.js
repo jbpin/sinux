@@ -259,9 +259,7 @@ module.exports =
 	            }
 	          }
 	        }, _callee, this, [[4, 22, 26, 34], [27,, 29, 33]]);
-	      })).catch(function (e) {
-	        return console.log('Signal error', e);
-	      });
+	      }));
 	    }
 	  }, {
 	    key: 'remove',

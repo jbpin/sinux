@@ -1,4 +1,5 @@
 import "babel-polyfill"
+global.Promise = require('bluebird');
 import co from 'co'
 import {expect} from 'chai'
 import {Store, Signal, Command} from '../index'
@@ -31,7 +32,7 @@ describe('Store', () => {
     expect(p).to.be.equal(s.test)
   })
 
-  it('should be able to plug store together', function(done){
+  it.only('should be able to plug store together', function(done){
     let s = new Store({}, 'test');
     let s2 = new Store({}, 'test');
     let s3 = new Store({}, 'test');

@@ -31,7 +31,7 @@ class Signal {
         result = {...result, ...r}
       }
       return result
-    }).catch((e) => console.log('Signal error', e))
+    })
   }
 
   remove(command) {
