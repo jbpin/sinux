@@ -297,11 +297,23 @@ module.exports =
 
 	var Store = (function () {
 	  function Store(initialState) {
+	    var _this = this;
+
 	    _classCallCheck(this, Store);
 
 	    this.state = initialState;
 	    // signal for the store
 	    this.changed = new _signal2.default('storeUpdated');
+
+	    var initSignal = new _signal2.default('initStore');
+	    initSignal.add(function () {
+	      _this.state = initialState;
+	      _this.changed.dispatch(_this.getState());
+	    });
+	    this['init'] = function () {
+	      return initSignal.dispatch();
+	    };
+	    // create signals
 
 	    for (var _len = arguments.length, signals = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
 	      signals[_key - 1] = arguments[_key];
@@ -313,7 +325,7 @@ module.exports =
 	  _createClass(Store, [{
 	    key: 'addSignals',
 	    value: function addSignals() {
-	      var _this = this;
+	      var _this2 = this;
 
 	      for (var _len2 = arguments.length, signals = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
 	        signals[_key2] = arguments[_key2];
@@ -327,21 +339,21 @@ module.exports =
 	        } else {
 	          name = s.name || s.__proto__.name;
 	        }
-	        if (_this[name]) {
+	        if (_this2[name]) {
 	          return;
 	        }
-	        _this[name] = function () {
+	        _this2[name] = function () {
 	          var _Signal$prototype$dis;
 
 	          for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
 	            args[_key3] = arguments[_key3];
 	          }
 
-	          return (_Signal$prototype$dis = _signal2.default.prototype.dispatch).call.apply(_Signal$prototype$dis, [s, _this.getState()].concat(args)).then(function (payload) {
-	            _this.updateState(payload);
+	          return (_Signal$prototype$dis = _signal2.default.prototype.dispatch).call.apply(_Signal$prototype$dis, [s, _this2.getState()].concat(args)).then(function (payload) {
+	            _this2.updateState(payload);
 	          });
 	        };
-	        _this[name].__proto__ = s;
+	        _this2[name].__proto__ = s;
 	      });
 	    }
 	  }, {
