@@ -32,7 +32,7 @@ describe('Store', () => {
     expect(p).to.be.equal(s.test)
   })
 
-  it.only('should be able to plug store together', function(done){
+  it('should be able to plug store together', function(done){
     let s = new Store({}, 'test');
     let s2 = new Store({}, 'test');
     let s3 = new Store({}, 'test');
@@ -78,6 +78,22 @@ describe('Store', () => {
         done(e)
       }
     })
+  })
+
+  it('should initialize the store to the initialState', function(done) {
+    let s = new Store({test:2}, 'test');
+    let c = new Command(s.test, (state, args) => { return {...state, ...args} })
+    s.test({foo:"bar"}).then(function(){
+      try{
+        expect(s.getState()).to.be.deep.equal({test:2, foo:'bar'})
+        s.init().then(function(){
+          expect(s.getState()).to.be.deep.equal({test:2})
+          done();
+        });
+      }catch(e){
+        done(e)
+      }
+    });
   })
 
   it('should update the state and dispatch an changed signal', function(done) {
