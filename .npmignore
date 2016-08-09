@@ -1,0 +1,2 @@
+// avoid error for project that use babel
+.babelrc

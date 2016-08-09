@@ -303,15 +303,15 @@ module.exports =
 
 	    this.state = initialState;
 	    // signal for the store
-	    this.changed = new _signal2.default('storeUpdated');
+	    this.changed = new _signal2.default('storeChanged');
 
-	    var initSignal = new _signal2.default('initStore');
-	    initSignal.add(function () {
+	    var resetSignal = new _signal2.default('reset');
+	    resetSignal.add(function () {
 	      _this.state = initialState;
 	      _this.changed.dispatch(_this.getState());
 	    });
-	    this['init'] = function () {
-	      return initSignal.dispatch();
+	    this['reset'] = function () {
+	      return resetSignal.dispatch();
 	    };
 	    // create signals
 

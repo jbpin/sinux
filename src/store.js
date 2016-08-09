@@ -4,15 +4,15 @@ export default class Store {
   constructor(initialState, ...signals){
     this.state = initialState;
     // signal for the store
-    this.changed = new Signal('storeUpdated');
+    this.changed = new Signal('storeChanged');
 
-    const initSignal = new Signal('initStore');
-    initSignal.add(() => {
+    const resetSignal = new Signal('reset');
+    resetSignal.add(() => {
       this.state = initialState;
       this.changed.dispatch(this.getState());
     });
-    this['init'] = () => {
-      return initSignal.dispatch();
+    this['reset'] = () => {
+      return resetSignal.dispatch();
     }
     // create signals
     this.addSignals(...signals);
