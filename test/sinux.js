@@ -86,7 +86,7 @@ describe('Store', () => {
     s.test({foo:"bar"}).then(function(){
       try{
         expect(s.getState()).to.be.deep.equal({test:2, foo:'bar'})
-        s.reset().then(function(){
+        s.resetStore().then(function(){
           expect(s.getState()).to.be.deep.equal({test:2})
           done();
         });

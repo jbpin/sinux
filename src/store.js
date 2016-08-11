@@ -6,12 +6,12 @@ export default class Store {
     // signal for the store
     this.changed = new Signal('storeChanged');
 
-    const resetSignal = new Signal('reset');
+    const resetSignal = new Signal('resetStore');
     resetSignal.add(() => {
       this.state = initialState;
       this.changed.dispatch(this.getState());
     });
-    this['reset'] = () => {
+    this['resetStore'] = () => {
       return resetSignal.dispatch();
     }
     // create signals

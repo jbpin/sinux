@@ -305,12 +305,12 @@ module.exports =
 	    // signal for the store
 	    this.changed = new _signal2.default('storeChanged');
 
-	    var resetSignal = new _signal2.default('reset');
+	    var resetSignal = new _signal2.default('resetStore');
 	    resetSignal.add(function () {
 	      _this.state = initialState;
 	      _this.changed.dispatch(_this.getState());
 	    });
-	    this['reset'] = function () {
+	    this['resetStore'] = function () {
 	      return resetSignal.dispatch();
 	    };
 	    // create signals
