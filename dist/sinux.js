@@ -146,10 +146,7 @@ module.exports =
 	  function Signal(name) {
 	    _classCallCheck(this, Signal);
 
-	    if (!name) {
-	      throw new Error('Signal name is mandatory');
-	    }
-	    this.name = name;
+	    this.name = name || Math.random().toString(36).substr(2, 5);
 	    this.commands = new Set();
 	  }
 
@@ -176,7 +173,7 @@ module.exports =
 	          while (1) {
 	            switch (_context.prev = _context.next) {
 	              case 0:
-	                result = {};
+	                result = undefined;
 	                _iteratorNormalCompletion = true;
 	                _didIteratorError = false;
 	                _iteratorError = undefined;
@@ -209,7 +206,11 @@ module.exports =
 	                r = c.apply(undefined, args);
 
 	              case 16:
-	                result = _extends({}, result, r);
+	                if (commands.size === 1) {
+	                  result = r;
+	                } else {
+	                  result = _extends({}, r, result);
+	                }
 
 	              case 17:
 	                _iteratorNormalCompletion = true;
@@ -333,12 +334,10 @@ module.exports =
 
 	      signals.forEach(function (signal) {
 	        var s = signal;
-	        var name = signal;
-	        if ('string' === typeof s) {
-	          s = new _signal2.default(name);
-	        } else {
-	          name = s.name || s.__proto__.name;
+	        if ('string' === typeof signal) {
+	          s = new _signal2.default(signal);
 	        }
+	        var name = s.name || s.__proto__.name || signal;
 	        if (_this2[name]) {
 	          return;
 	        }
@@ -349,8 +348,9 @@ module.exports =
 	            args[_key3] = arguments[_key3];
 	          }
 
-	          return (_Signal$prototype$dis = _signal2.default.prototype.dispatch).call.apply(_Signal$prototype$dis, [s, _this2.getState()].concat(args)).then(function (payload) {
-	            _this2.updateState(payload);
+	          return (_Signal$prototype$dis = _signal2.default.prototype.dispatch).call.apply(_Signal$prototype$dis, [s, _this2.getState()].concat(args)).then(function (newState) {
+	            _this2.updateState(newState);
+	            return newState;
 	          });
 	        };
 	        _this2[name].__proto__ = s;

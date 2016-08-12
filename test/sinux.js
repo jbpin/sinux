@@ -138,11 +138,30 @@ describe('Command', function() {
 
   it('should return a promise on execute', function(done) {
     let c = new Command(new Signal('test'), (state, args) => { return {...state, ...args} })
-    var p = c.execute({foo:"bar"});
+    let p = c.execute({foo:"bar"});
     p.then((value)=> {
       expect(value).to.be.deep.equal({foo:'bar'})
       done()
     })
+  })
+
+  it('should return uppercase', function(done){
+    const myStore = new Store({}, 'test');
+    new Command(myStore.test, (state, text) => {
+      return text.toUpperCase();
+    });
+
+    // invoke command
+    myStore.test('bob').then((upperText) => {
+      try{
+        expect(upperText).to.be.equals('BOB');
+        done();
+      }catch(e){
+        done(e);
+      }
+    });
+
+    // output: BOB;
   })
 });
 
@@ -156,6 +175,11 @@ describe('Signal', function() {
     s.dispatch('test').then(value => {
       done()
     })
+  })
+
+  it.only('should generate a name when is not provided', function() {
+    let s = new Signal();
+    console.log(s.name);
   })
 
   it('should remove a listener', function(){
@@ -175,4 +199,24 @@ describe('Signal', function() {
     s.add(fn)
     expect(s.commands.size).to.be.equal(1);
   })
+
+  it('should have response in then handler', function(done){
+    function listener(text) {
+      return new Promise((resolve) => setTimeout( ()=> resolve(text.toUpperCase()), 1000));
+    }
+    const upperCaseSignal = new Signal('uppercase');
+
+    upperCaseSignal.add(listener);
+
+    upperCaseSignal.dispatch('text')
+      .then((result) => {
+        try{
+          expect(result).to.be.equals('TEXT');
+          done();
+        }catch(e) {
+          done(e);
+        }
+      });
+  })
+
 });

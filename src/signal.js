@@ -3,10 +3,7 @@ import co from 'co';
 class Signal {
 
   constructor(name){
-    if(!name){
-      throw new Error('Signal name is mandatory');
-    }
-    this.name = name;
+    this.name = name || Math.random().toString(36).substr(2, 5);
     this.commands = new Set();
   }
 
@@ -18,9 +15,9 @@ class Signal {
 
   dispatch(...args) {
     // compute listener promise
-    var commands = this.commands
-    return co(function* (){
-      var result = {}
+    const commands = this.commands
+    return co(function *(){
+      let result;
       for (let c of commands) {
         let r = null;
         if(c.execute){
@@ -28,10 +25,14 @@ class Signal {
         }else{
           r = c(...args)
         }
-        result = {...result, ...r}
+        if (commands.size === 1) {
+          result = r;
+        } else {
+          result = {...r, ...result}
+        }
       }
       return result
-    })
+    });
   }
 
   remove(command) {

@@ -21,18 +21,17 @@ export default class Store {
   addSignals(...signals) {
     signals.forEach((signal) => {
       let s = signal;
-      let name = signal;
-      if('string' === typeof s) {
-        s = new Signal(name);
-      }else{
-        name = s.name || s.__proto__.name;
+      if('string' === typeof signal) {
+        s = new Signal(signal);
       }
+      let name = s.name || s.__proto__.name || signal;
       if(this[name]){
         return;
       }
       this[name] = (...args) => {
-        return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((payload) => {
-          this.updateState(payload);
+        return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((newState) => {
+          this.updateState(newState);
+          return newState;
         });
       };
       this[name].__proto__ = s;
