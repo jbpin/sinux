@@ -110,23 +110,87 @@ describe('Store', () => {
     })
   })
 
-  it('should support async command', function(done) {
-    let s = new Store({test:3}, 'test');
-    let c = new Command(s.test, (state, args) => {
+  it('should support dependencies between store - Promise', function(done) {
+    let s1 = new Store({a:1}, 'test');
+    new Command(s1.test, (state, args) => {
       return new Promise(function (resolve, reject) {
         setTimeout(function() { resolve({...state, ...args}) }, 100);
       })
     })
-    s.test({foo:"bar"})
-    s.changed.add(function (value) {
+
+    let s2 = new Store({}, 'test');
+    new Command(s2.test, (state, args) => {
+      return s1.test(args).then( (s1State) => s1State);
+    });
+
+    s2.test({foo: 'bar'});
+
+    s2.changed.add(function (value) {
       try{
-        expect(s.getState()).to.be.deep.equal({test:3, foo:'bar'});
+        expect(s1.getState()).to.be.deep.equal(s2.getState());
         done()
       }catch(e) {
         done(e)
       }
     })
   })
+
+  it('should support dependencies between store - Async/Await', function(done) {
+    let s1 = new Store({a:1}, 'test');
+    new Command(s1.test, (state, args) => {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function() { resolve({...state, ...args}) }, 100);
+      })
+    })
+
+    let s2 = new Store({}, 'test');
+    new Command(s2.test, (state, args) => {
+      return async function(){
+        const s1State = await s1.test({foo:"bar"});
+        return s1State;
+      }();
+    });
+
+    s2.test();
+
+    s2.changed.add(function (value) {
+      try{
+        expect(s1.getState()).to.be.deep.equal(s2.getState());
+        done()
+      }catch(e) {
+        done(e)
+      }
+    })
+  })
+
+  it('should support dependencies between store - Generator', function(done) {
+    let s1 = new Store({a:1}, 'test');
+    new Command(s1.test, (state, args) => {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function() { resolve({...state, ...args}) }, 100);
+      })
+    })
+
+    let s2 = new Store({}, 'test');
+    new Command(s2.test, (state, args) => {
+      return function *(){
+        const s1State = yield s1.test({foo:"bar"});
+        return s1State;
+      }();
+    });
+
+    s2.test();
+
+    s2.changed.add(function (value) {
+      try{
+        expect(s1.getState()).to.be.deep.equal(s2.getState());
+        done()
+      }catch(e) {
+        done(e)
+      }
+    })
+  })
+
 })
 
 describe('Command', function() {
@@ -177,9 +241,9 @@ describe('Signal', function() {
     })
   })
 
-  it.only('should generate a name when is not provided', function() {
+  it('should generate a name when is not provided', function() {
     let s = new Signal();
-    console.log(s.name);
+    expect(s.name).to.not.be.null;
   })
 
   it('should remove a listener', function(){
