@@ -7,7 +7,7 @@ Sinux use [co](https://github.com/tj/co) library
 [![Join the chat at https://gitter.im/jbpin/sinux](https://badges.gitter.im/jbpin/sinux.svg)](https://gitter.im/jbpin/sinux?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Documentation
-Visit the book, [Sinux, a flux implementation based on signal](https://jbpin.gitbooks.io/sinux-a-flux-implementation-based-on-signal/content/) to have details documentation and examples. 
+Visit the book, [Sinux, a flux implementation based on signal](https://jbpin.gitbooks.io/sinux-a-flux-implementation-based-on-signal/content/) to see the documentation and examples. 
 
 ## Philosophy behind Sinux
 Read [this article on Medium](https://medium.com/@jbpin/why-do-i-write-sinux-a-flux-inspired-library-for-react-native-80e2ccce031c)
