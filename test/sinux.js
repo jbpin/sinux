@@ -1,5 +1,3 @@
-import "babel-polyfill"
-global.Promise = require('bluebird');
 import co from 'co'
 import {expect} from 'chai'
 import {Store, Signal, Command} from '../index'
@@ -27,9 +25,8 @@ describe('Store', () => {
 
   it('should not override signal', function() {
     let s = new Store({}, 'test');
-    let p = s.test;
-    s.addSignals('test')
-    expect(p).to.be.equal(s.test)
+    const fn = () => s.addSignals('test');
+    expect(fn).to.throw()
   })
 
   it('should be able to plug store together', function(done){

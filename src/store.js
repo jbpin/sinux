@@ -20,13 +20,10 @@ export default class Store {
 
   addSignals(...signals) {
     signals.forEach((signal) => {
-      let s = signal;
-      if('string' === typeof signal) {
-        s = new Signal(signal);
-      }
+      const s = 'string' === typeof signal ? new Signal(signal) : signal;
       let name = s.name || s.__proto__.name || signal;
-      if(this[name]){
-        return;
+      if (this[name]) {
+        throw new Error('This signal is already present. You can\'t add it.');
       }
       this[name] = (...args) => {
         return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((newState) => {

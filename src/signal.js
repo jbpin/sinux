@@ -1,6 +1,6 @@
 import co from 'co';
 
-class Signal {
+export default class Signal {
 
   constructor(name){
     this.name = name || Math.random().toString(36).substr(2, 5);
@@ -21,17 +21,17 @@ class Signal {
       for (let c of commands) {
         let r = null;
         if(c.execute){
-          r = yield c.execute(...args)
+          r = yield c.execute(...args);
         }else{
-          r = c(...args)
+          r = c(...args);
         }
         if (commands.size === 1) {
           result = r;
         } else {
-          result = {...r, ...result}
+          result = {...r, ...result};
         }
       }
-      return result
+      return result;
     });
   }
 
@@ -39,5 +39,3 @@ class Signal {
     this.commands.delete(command);
   }
 }
-
-export default Signal
