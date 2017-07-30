@@ -1,6 +1,6 @@
 {
   "name": "sinux",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Facebook Flux architecture implementation based on self dispatching actions and commands",
   "main": "dist/sinux.js",
   "scripts": {
