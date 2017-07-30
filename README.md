@@ -17,68 +17,65 @@ Read [this article on Medium](https://medium.com/@jbpin/why-do-i-write-sinux-a-f
 Sinux is available on NPM
 
 ```
-npm install -S sinux
+npm i sinux
+```
+
+```
+yarn add sinux
 ```
 
 ## Usage
 
-Using babel6 with es2015
+> Since version 0.2.0 Command objects are deprecated. Command are simple javascript function that can return a result or a function (see async below).
 
-add to your package.json script tags
+### Using babel6 with es2015
 
-```
-"scripts": {
-  ...
-  "start": "babel-node index.js",
-  ...
-}
-```
 
 ```javascript
-import {Store, Command} from sinux
+import { Store } from sinux
 
-const store = new Store({initialState: true}, 'action','action2')
+const store = new Store({ initialState: true }, 'action','action2');
 
-new Command(store.action, (state, ...args)=> {...state, ...args} )
+store.action.add( (state, ...args) => {...state, ...args} );
 
-store.action({foo:'bar'}).then(()=> console.log(store.getState())) 
-// {initialState: true, foo:'bar'}
+store.action({ foo:'bar' }).then( () => console.log( store.getState() ) );
+// {initialState: true, foo: 'bar'}
 ```
 
-Using ES3
+### Using ES3
 
 ```javascript
 
 var sinux = require('sinux');
 
 var Store = sinux.Store;
-var Command = sinux.Command;
 
-var store = new Store({initialState: true}, 'action','action2');
+var store = new Store({ initialState: true }, 'action','action2');
 
-new Command(store.action, function(state){ 
+store.action.add( function (state) {
   // Array.prototype.slice.call(arguments,1)
   // ...
 });
 
-store.action({foo:'bar'}).then(function(){ 
+store.action({ foo:'bar' }).then(function () {
   console.log(store.getState())
 });
 
-
 ```
 
-Asynchronous command
+### Asynchronous command
 
 ```javascript
-new Command(store.action, (state, ...args) => {
+// using generator function
+store.action.add( (state, ...args) => {
   return function *(){
     let r = yield store.action2(...args)
     return r
   }()
-})
+});
 
-new Command(store.action, (state, ...args) => {
+// using Promise
+store.action.add( (state, ...args) => {
   return new Promise((resolve, reject) => {
     setTimeout(()=> resolve(...args), 1000)
   })

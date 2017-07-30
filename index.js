@@ -3,7 +3,7 @@ import Signal from './src/signal'
 import Store from './src/store'
 
 export {
-  Command,
   Signal,
-  Store
+  Store,
+  Command,
 }

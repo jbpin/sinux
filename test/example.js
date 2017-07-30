@@ -1,5 +1,4 @@
 import contactStore from '../example/index'
-import Command from '../src/command'
 import Signal from '../src/signal'
 import Store from '../src/store'
 import {expect} from 'chai'

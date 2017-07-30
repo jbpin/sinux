@@ -50,13 +50,13 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Store = exports.Signal = exports.Command = undefined;
+	exports.Command = exports.Store = exports.Signal = undefined;
 
 	var _command = __webpack_require__(1);
 
 	var _command2 = _interopRequireDefault(_command);
 
-	var _signal = __webpack_require__(3);
+	var _signal = __webpack_require__(2);
 
 	var _signal2 = _interopRequireDefault(_signal);
 
@@ -66,62 +66,25 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.Command = _command2.default;
 	exports.Signal = _signal2.default;
 	exports.Store = _store2.default;
+	exports.Command = _command2.default;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	function Command(signal, fx) {
+	  console.log('WARNING: Command are deprecated. Please use signal.add method like in \'store.action.add((state, args) => ...)');
+	  signal.add(fx);
+	}
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _co = __webpack_require__(2);
-
-	var _co2 = _interopRequireDefault(_co);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Command = function () {
-	  function Command(signal, fx) {
-	    _classCallCheck(this, Command);
-
-	    this.fx = fx;
-	    signal.add(this);
-	  }
-
-	  _createClass(Command, [{
-	    key: 'execute',
-	    value: function execute() {
-	      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	        args[_key] = arguments[_key];
-	      }
-
-	      return _co2.default.apply(undefined, [this.fx].concat(args));
-	    }
-	  }]);
-
-	  return Command;
-	}();
-
-	exports.default = Command;
+	module.exports = Command;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-	module.exports = require("co");
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -130,7 +93,7 @@ module.exports =
 	  value: true
 	});
 
-	var _regenerator = __webpack_require__(4);
+	var _regenerator = __webpack_require__(3);
 
 	var _regenerator2 = _interopRequireDefault(_regenerator);
 
@@ -138,7 +101,7 @@ module.exports =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _co = __webpack_require__(2);
+	var _co = __webpack_require__(6);
 
 	var _co2 = _interopRequireDefault(_co);
 
@@ -186,84 +149,71 @@ module.exports =
 
 	              case 6:
 	                if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-	                  _context.next = 20;
-	                  break;
-	                }
-
-	                c = _step.value;
-	                r = null;
-
-	                if (!c.execute) {
 	                  _context.next = 15;
 	                  break;
 	                }
 
-	                _context.next = 12;
-	                return c.execute.apply(c, args);
+	                c = _step.value;
+	                _context.next = 10;
+	                return _co2.default.apply(undefined, [c].concat(args));
 
-	              case 12:
+	              case 10:
 	                r = _context.sent;
-	                _context.next = 16;
-	                break;
 
-	              case 15:
-	                r = c.apply(undefined, args);
-
-	              case 16:
 	                if (commands.size === 1) {
 	                  result = r;
 	                } else {
 	                  result = _extends({}, r, result);
 	                }
 
-	              case 17:
+	              case 12:
 	                _iteratorNormalCompletion = true;
 	                _context.next = 6;
 	                break;
 
-	              case 20:
-	                _context.next = 26;
+	              case 15:
+	                _context.next = 21;
 	                break;
 
-	              case 22:
-	                _context.prev = 22;
+	              case 17:
+	                _context.prev = 17;
 	                _context.t0 = _context['catch'](4);
 	                _didIteratorError = true;
 	                _iteratorError = _context.t0;
 
-	              case 26:
-	                _context.prev = 26;
-	                _context.prev = 27;
+	              case 21:
+	                _context.prev = 21;
+	                _context.prev = 22;
 
 	                if (!_iteratorNormalCompletion && _iterator.return) {
 	                  _iterator.return();
 	                }
 
-	              case 29:
-	                _context.prev = 29;
+	              case 24:
+	                _context.prev = 24;
 
 	                if (!_didIteratorError) {
-	                  _context.next = 32;
+	                  _context.next = 27;
 	                  break;
 	                }
 
 	                throw _iteratorError;
 
-	              case 32:
-	                return _context.finish(29);
+	              case 27:
+	                return _context.finish(24);
 
-	              case 33:
-	                return _context.finish(26);
+	              case 28:
+	                return _context.finish(21);
 
-	              case 34:
+	              case 29:
 	                return _context.abrupt('return', result);
 
-	              case 35:
+	              case 30:
 	              case 'end':
 	                return _context.stop();
 	            }
 	          }
-	        }, _callee, this, [[4, 22, 26, 34], [27,, 29, 33]]);
+	        }, _callee, this, [[4, 17, 21, 29], [22,, 24, 28]]);
 	      }));
 	    }
 	  }, {
@@ -279,14 +229,14 @@ module.exports =
 	exports.default = Signal;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(5);
+	module.exports = __webpack_require__(4);
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// This method of obtaining a reference to the global object needs to be
@@ -307,7 +257,7 @@ module.exports =
 	// Force reevalutation of runtime.js.
 	g.regeneratorRuntime = undefined;
 
-	module.exports = __webpack_require__(6);
+	module.exports = __webpack_require__(5);
 
 	if (hadRuntime) {
 	  // Restore the original runtime.
@@ -324,7 +274,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -1067,6 +1017,12 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+	module.exports = require("co");
+
+/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1080,7 +1036,7 @@ module.exports =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _signal = __webpack_require__(3);
+	var _signal = __webpack_require__(2);
 
 	var _signal2 = _interopRequireDefault(_signal);
 

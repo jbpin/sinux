@@ -1,14 +1,6 @@
-import co from 'co';
-
-class Command {
-  constructor(signal, fx) {
-    this.fx = fx;
-    signal.add(this);
-  }
-
-  execute(...args) {
-    return co(this.fx, ...args);
-  }
+function Command(signal, fx) {
+  console.log('WARNING: Command are deprecated. Please use signal.add method like in \'store.action.add((state, args) => ...)');
+  signal.add(fx);
 }
 
-export default Command
+module.exports = Command;

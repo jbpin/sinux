@@ -19,12 +19,7 @@ export default class Signal {
     return co(function *(){
       let result;
       for (let c of commands) {
-        let r = null;
-        if(c.execute){
-          r = yield c.execute(...args);
-        }else{
-          r = c(...args);
-        }
+        const r = yield co(c, ...args);
         if (commands.size === 1) {
           result = r;
         } else {
