@@ -107,6 +107,19 @@ describe('Store', () => {
     })
   })
 
+  it('should support an extended version of shortcut method', function(done) {
+    let s = new Store({test:2}, 'test');
+    s.test.add((state, args) => { return {...state, ...args} })
+    s.test.dispatch(s.getState(), { foo: 'bar'}).then((result) => s.updateState(result)).then((result) => {
+      try{
+        expect(result).to.be.deep.equal(s.getState())
+        done()
+      }catch(e){
+        done(e)
+      }
+    })
+  })
+
   it('should support dependencies between store - Promise', function(done) {
     let s1 = new Store({a:1}, 'test');
     s1.test.add( (state, args) => {
