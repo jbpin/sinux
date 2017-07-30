@@ -1094,8 +1094,7 @@ module.exports =
 	          }
 
 	          return (_Signal$prototype$dis = _signal2.default.prototype.dispatch).call.apply(_Signal$prototype$dis, [s, _this2.getState()].concat(args)).then(function (newState) {
-	            _this2.updateState(newState);
-	            return newState;
+	            return _this2.updateState(newState);
 	          });
 	        };
 	        _this2[name].__proto__ = s;
@@ -1111,6 +1110,7 @@ module.exports =
 	    value: function updateState(payload) {
 	      this.state = _extends({}, this.state, payload);
 	      this.changed.dispatch(this.getState());
+	      return this.getState();
 	    }
 	  }]);
 

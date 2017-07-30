@@ -1,6 +1,6 @@
-import {Store} from '../index'
+import {Store, Signal} from '../index'
 
-const contactStore = new Store({contacts:[]}, 'add', 'remove', 'update', 'load');
+const contactStore = new Store({contacts:[]}, 'add', 'remove', 'update');
 
 contactStore.add.add( (state, firstname, lastname, ...phones) => {
   return {...state, contacts : [...state.contacts, {
@@ -18,6 +18,8 @@ contactStore.update.add( (state, id, contact) => {
   return {...state, contacts : [...state.contacts.slice(0, id), {...contact}, ...state.contacts.slice(id + 1)]}
 })
 
+const load = new Signal('load');
+contactStore.addSignals(load);
 contactStore.load.add( (state) => {
   var dummyData = {
     contacts: [

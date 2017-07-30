@@ -27,8 +27,7 @@ export default class Store {
       }
       this[name] = (...args) => {
         return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((newState) => {
-          this.updateState(newState);
-          return newState;
+          return this.updateState(newState);
         });
       };
       this[name].__proto__ = s;
@@ -42,5 +41,6 @@ export default class Store {
   updateState(payload) {
     this.state = {...this.state, ...payload};
     this.changed.dispatch(this.getState());
+    return this.getState();
   }
 }
