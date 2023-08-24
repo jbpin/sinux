@@ -1,6 +1,17 @@
-import {Store, Signal} from '../index'
+import {Store, Signal, createStore} from '../src';
 
-const contactStore = new Store({contacts:[]}, 'add', 'remove', 'update');
+const store = createStore({status: false}, {
+  add: (state, firstname, lastname, ...phones) => {
+    return {...state, contacts : [...state.contacts, {
+        firstname,
+        lastname,
+        phones
+      }]}
+  },
+  checked: (state, value) => value
+})
+
+const contactStore = new Store({ contacts: [] }, 'add', 'remove', 'update');
 
 contactStore.add.add( (state, firstname, lastname, ...phones) => {
   return {...state, contacts : [...state.contacts, {

@@ -1,4 +1,4 @@
-import contactStore from '../example/index'
+import contactStore from '../packages/core/example/index.js'
 import Signal from '../src/signal'
 import Store from '../src/store'
 import {expect} from 'chai'

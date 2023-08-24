@@ -1,0 +1,9 @@
+{
+  "name": "@sinux/core",
+  "version": "1.0.0",
+  "main": "dist/core/cjs/index",
+  "types": "dist/core/cjs/index",
+  "files": [
+    "dist"
+  ]
+}

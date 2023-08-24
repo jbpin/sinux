@@ -1,21 +1,28 @@
-import Signal from './signal'
+import {Signal} from './signal'
 
-export default class Store {
-  constructor(initialState, ...signals){
+export class Store<T> {
+  private resetSignal: Signal<any>
+  
+  state:T
+  changed: Signal<any>
+
+  constructor(initialState: T, ...signals: (Signal<any>|string)[]){
     this.state = initialState;
     // signal for the store
     this.changed = new Signal('storeChanged');
 
-    const resetSignal = new Signal('resetStore');
-    resetSignal.add(() => {
+    this.resetSignal = new Signal('resetStore');
+    this.resetSignal.add(() => {
       this.state = initialState;
       this.changed.dispatch(this.getState());
     });
-    this['resetStore'] = () => {
-      return resetSignal.dispatch();
-    }
+    
     // create signals
     this.addSignals(...signals);
+  }
+
+  resetStore() {
+    return this.resetSignal?.dispatch()
   }
 
   addSignals(...signals) {
