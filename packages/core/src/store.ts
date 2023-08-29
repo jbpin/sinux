@@ -1,10 +1,10 @@
 import {Signal} from './signal'
 
 export class Store<T> {
-  private resetSignal: Signal<any>
+  private resetSignal: Signal<() => any>
   
   state:T
-  changed: Signal<any>
+  changed: Signal<(state:T)=> any>
 
   constructor(initialState: T, ...signals: (Signal<any>|string)[]){
     this.state = initialState;
@@ -41,11 +41,11 @@ export class Store<T> {
     })
   }
 
-  getState() {
+  getState(): T {
     return {...this.state};
   }
 
-  updateState(payload) {
+  updateState(payload: T) {
     this.state = {...this.state, ...payload};
     this.changed.dispatch(this.getState());
     return this.getState();

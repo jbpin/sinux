@@ -1,20 +1,19 @@
-export class Signal<T> extends Function {
+export class Signal<T extends (...args: any) => any> {
   name: string;
   private commands: Set<Function>;
 
   constructor(name?: string){
-    super();
     this.name = name || Math.random().toString(36).slice(2, 5);
     this.commands = new Set();
   }
 
-  add(command: (args: T) => unknown|Promise<unknown>){
+  add(command: T){
     if(!this.commands.has(command)){
       this.commands.add(command)
     }
   }
 
-  async dispatch(args?: T) {
+  async dispatch(...args: Parameters<T>) {
     // compute listener promise
     let result;
     for (let c of this.commands) {
@@ -32,7 +31,7 @@ export class Signal<T> extends Function {
     return result;
   }
 
-  remove(command: (...args) => unknown|Promise<unknown>) {
+  remove(command: (...args) => any|Promise<any>) {
     this.commands.delete(command);
   }
 }

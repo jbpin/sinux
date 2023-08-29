@@ -1,32 +1,29 @@
 export { Signal } from './signal';
 import { Signal } from './signal';
 import { Store } from './store';
+import { TransformArgumentsToSignalInstances } from './types';
 
-type Shift<T extends any[]> = ((...args: T) => any) extends (first: any, ...rest: infer R) => any ? R : never;
+export type SignalDef = string[] | Record<string, (...args:any) => any>;
 
-type OmitState<T extends [state?: any, ...rest: any[]]> = Shift<T>;
+export function createStore<T, U extends SignalDef>(
+  initialState: T,
+  signals?: U
+): Store<T> & TransformArgumentsToSignalInstances<T, U> {
+  class ExtendedStore extends Store<T> {}
 
-type FunctionFromTuple<T extends any[]> = (...args: OmitState<T>) => any;
-
-type SignalFn<T extends any[]> = Signal<T> & FunctionFromTuple<T>;
-
-type TransformObjectToSignalInstances<T extends Record<string, (...any: any) => any>> = {
-  [K in keyof T]: SignalFn<Parameters<T[K]>>;
-};
-
-export function createStore<T, U>(initialState: T, methods: U): Store<T> & TransformObjectToSignalInstances<U> {
-  class Extended extends Store<T> {}
-
-  for (const [methodName, method] of Object.entries(methods)) {
+  const methodNames = Array.isArray(signals) ? signals : Object.keys(signals);
+  for (const methodName of methodNames) {
     const s = new Signal(methodName);
-    s.add(method);
-    Extended.prototype[methodName] = (...args) => {
+    if (!Array.isArray(signals) && signals[methodName]) {
+      s.add(signals[methodName]);
+    }
+    ExtendedStore.prototype[methodName] = (...args) => {
       return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((newState) => {
         return this.updateState(newState);
       });
     };
   }
-  return new Extended(initialState) as any as Store<T> & TransformObjectToSignalInstances<U>;
+  return new ExtendedStore(initialState) as Store<T> & TransformArgumentsToSignalInstances<T, U>;
 }
 
 export { Store };
