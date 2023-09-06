@@ -4,6 +4,6 @@
   "main": "dist/core/cjs/index",
   "types": "dist/core/cjs/index",
   "files": [
-    "dist"
+    "../../dist"
   ]
 }

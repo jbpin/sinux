@@ -1,12 +1,12 @@
 import {Signal} from './signal'
 
 export class Store<T> {
-  private resetSignal: Signal<() => any>
+  private resetSignal: Signal<T, () => void>
   
   state:T
-  changed: Signal<(state:T)=> any>
+  changed: Signal<T, (state:T)=> any>
 
-  constructor(initialState: T, ...signals: (Signal<any>|string)[]){
+  constructor(initialState: T, ...signals: (Signal<T, any>|string)[]){
     this.state = initialState;
     // signal for the store
     this.changed = new Signal('storeChanged');
@@ -33,7 +33,7 @@ export class Store<T> {
         throw new Error('This signal is already present. You can\'t add it.');
       }
       this[name] = (...args) => {
-        return Signal.prototype.dispatch.call(s, this.getState(), ...args).then((newState) => {
+        return Signal.prototype.dispatch.call(this, this.getState(), ...args).then((newState) => {
           return this.updateState(newState);
         });
       };
@@ -45,7 +45,11 @@ export class Store<T> {
     return {...this.state};
   }
 
-  updateState(payload: T) {
+  updateState(payload: Partial<T>| void) {
+    if (!payload){
+      return;
+    }
+    //TODO: dispatch only if state changed
     this.state = {...this.state, ...payload};
     this.changed.dispatch(this.getState());
     return this.getState();

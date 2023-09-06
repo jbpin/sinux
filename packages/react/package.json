@@ -1,0 +1,9 @@
+{
+  "name": "@sinux/react",
+  "version": "1.0.0",
+  "main": "dist/react/cjs/index",
+  "types": "dist/react/cjs/index",
+  "files": [
+    "../../dist"
+  ]
+}

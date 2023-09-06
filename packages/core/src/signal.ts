@@ -1,4 +1,4 @@
-export class Signal<T extends (...args: any) => any> {
+export class Signal<T, U extends (...args) => any> {
   name: string;
   private commands: Set<Function>;
 
@@ -7,13 +7,13 @@ export class Signal<T extends (...args: any) => any> {
     this.commands = new Set();
   }
 
-  add(command: T){
+  add(command: U | ((state:T, ...args) => Partial<T> | Promise<Partial<T>>)){
     if(!this.commands.has(command)){
       this.commands.add(command)
     }
   }
 
-  async dispatch(...args: Parameters<T>) {
+  async dispatch(...args: Parameters<U>) {
     // compute listener promise
     let result;
     for (let c of this.commands) {
@@ -31,7 +31,7 @@ export class Signal<T extends (...args: any) => any> {
     return result;
   }
 
-  remove(command: (...args) => any|Promise<any>) {
+  remove(command: U) {
     this.commands.delete(command);
   }
 }

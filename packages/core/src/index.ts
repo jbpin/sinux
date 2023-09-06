@@ -1,11 +1,9 @@
 export { Signal } from './signal';
 import { Signal } from './signal';
 import { Store } from './store';
-import { TransformArgumentsToSignalInstances } from './types';
+import { TransformArgumentsToSignalInstances, SignalDef } from './types';
 
-export type SignalDef = string[] | Record<string, (...args:any) => any>;
-
-export function createStore<T, U extends SignalDef>(
+export function createStore<T, U extends SignalDef<T> = SignalDef<T>>(
   initialState: T,
   signals?: U
 ): Store<T> & TransformArgumentsToSignalInstances<T, U> {

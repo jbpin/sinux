@@ -2,11 +2,11 @@ import {createStore} from '../src';
 
 interface ContactStoreState {
   status: boolean,
-  contacts?: [],
+  contacts?: any[],
 }
 
 const store = createStore(
-  {status: false},
+  {status: false} as ContactStoreState,
   {
     add: (state, firstname: string, lastname: string, ...phones: string[]) => {
       return {...state, contacts : [...state.contacts, {
@@ -15,9 +15,11 @@ const store = createStore(
           phones
         }]}
     },
-    checked: (state, value) => value,
+    checked: async (state, value) => state,
+    test: (state) => state
   }
 );
+
 
 const contactStore = createStore<ContactStoreState, ['add', 'remove', 'update', 'load']>({ status: false, contacts: [] }, ['add', 'remove', 'update', 'load']);
 contactStore.add.add( async (state, firstname, lastname, ...phones) => {

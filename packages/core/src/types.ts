@@ -4,13 +4,15 @@ export type Shift<T extends any[]> = ((...args: T) => any) extends (first: any, 
 
 export type OmitState<T extends [state?: any, ...rest: any[]]> = Shift<T>;
 
-export type FunctionFromTuple<T extends any[]> = (...args: OmitState<T>) => any;
+export type FunctionFromTuple<T, U extends any[]> = (...args: OmitState<U>) => Promise<Partial<T>>;
 
-export type SignalFunction<T, U extends (state: T, ...args: any) => any> = Signal<U> & FunctionFromTuple<Parameters<U>>;
+export type SignalFunction<T, U extends (state: T, ...args: any) => any> = Signal<T, U> & FunctionFromTuple<T, Parameters<U>>;
+
+export type SignalDef<T> = Record<string, (state: T, ...args: any) => Partial<T> | Promise<Partial<T>>> | string[];
 
 export type TransformArgumentsToSignalInstances<
   T,
-  U extends string[] | Record<string, (...args: any[]) => any>
-> = U extends Array<string>
-  ? { [K in U[number]]: SignalFunction<T, (...args: any[]) => any> }
-  : { [K in keyof U]: U[K] extends (...args: any[]) => any ? SignalFunction<T, U[K]> : never };
+  U extends SignalDef<T>
+> = U extends string[]
+  ? { [K in U[number]]: SignalFunction<T, (state: T, ...args: any[]) => Promise<Partial<T>> | Partial<T>> }
+  : { [K in keyof U]: U[K] extends (state: T, ...args: any[]) => any ? SignalFunction<T, U[K]> : never };

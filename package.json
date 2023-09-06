@@ -1,6 +1,7 @@
 {
   "name": "sinux",
   "version": "1.0.0",
+  "private": true,
   "description": "Sate management library implementing Facebook Flux architecture based on self dispatching signal",
   "scripts": {
     "prepublish": "npm run build",
@@ -8,6 +9,9 @@
     "test": "mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm test -- --watch"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jbpin/sinux.git"
@@ -31,6 +35,7 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^4.3.7",
+    "lerna": "^6.6.2",
     "mocha": "^10.2.0",
     "rollup": "^3.28.1",
     "rollup-plugin-typescript2": "^0.35.0",
@@ -39,5 +44,20 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },
-  "dependencies": {}
+  "peerDependencies": {
+    "@types/react": ">=16.8",
+    "immer": ">=9.0",
+    "react": ">=16.8"
+  },
+  "peerDependenciesMeta": {
+    "immer": {
+      "optional": true
+    },
+    "@types/react": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
+  }
 }
