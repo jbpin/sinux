@@ -1,9 +1,17 @@
 {
   "name": "@sinux/core",
-  "version": "1.0.0",
-  "main": "dist/core/cjs/index",
-  "types": "dist/core/cjs/index",
+  "version": "0.2.1",
+  "license": "MIT",
+  "main": "dist/cjs",
+  "types": "dist/cjs/src",
+  "module": "dist/esm",
+  "scripts": {
+    "build": "rollup -c ../../rollup.config.mjs"
+  },
   "files": [
-    "../../dist"
+    "dist/**",
+    "package.json",
+    "README.md",
+    "LICENSE"
   ]
 }

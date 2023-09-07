@@ -9,7 +9,7 @@ export function createStore<T, U extends SignalDef<T> = SignalDef<T>>(
 ): Store<T> & TransformArgumentsToSignalInstances<T, U> {
   class ExtendedStore extends Store<T> {}
 
-  const methodNames = Array.isArray(signals) ? signals : Object.keys(signals);
+  const methodNames = Array.isArray(signals) ? signals : Object.keys(signals || {});
   for (const methodName of methodNames) {
     const s = new Signal(methodName);
     if (!Array.isArray(signals) && signals[methodName]) {

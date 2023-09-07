@@ -4,16 +4,21 @@
     "module": "ESNext",
     "allowJs": true,
     "declaration": true,
+    "composite": true,
     "emitDeclarationOnly": false,
     "outDir": "dist",
     "declarationMap": false,
     "moduleResolution": "node",
     "sourceMap": false,
+    "declarationDir": "dist",
     "baseUrl": "./",
     "incremental": true,
     "paths": {
       "@sinux/core": [
         "packages/core/src"
+      ],
+      "@sinux/react": [
+        "packages/react/src"
       ]
     }
   }

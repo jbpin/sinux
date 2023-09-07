@@ -1,9 +1,27 @@
 {
   "name": "@sinux/react",
-  "version": "1.0.0",
-  "main": "dist/react/cjs/index",
-  "types": "dist/react/cjs/index",
+  "version": "0.2.1",
+  "license": "MIT",
+  "main": "dist/cjs",
+  "types": "dist/cjs/src",
+  "module": "dist/esm",
+  "scripts": {
+    "build": "rollup -c ../../rollup.config.mjs"
+  },
   "files": [
-    "../../dist"
-  ]
+    "dist/**",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "use-sync-external-store": "1.2.0"
+  },
+  "peerDependencies": {
+    "@sinux/core": "*"
+  },
+  "devDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }
