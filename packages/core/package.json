@@ -1,5 +1,5 @@
 {
-  "name": "@sinux/core",
+  "name": "@sinuxjs/core",
   "version": "1.0.0-alpha.2",
   "publishConfig": {
     "access": "public"
@@ -17,5 +17,5 @@
     "README.md",
     "LICENSE"
   ],
-  "gitHead": "17dd6e892571f69463a214ff07f8aa82f218e602"
+  "gitHead": "eda7fd979b58c9d3285b84d803aee9e730057d0a"
 }

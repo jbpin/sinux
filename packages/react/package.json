@@ -1,5 +1,5 @@
 {
-  "name": "@sinux/react",
+  "name": "@sinuxjs/react",
   "version": "1.0.0-alpha.2",
   "license": "MIT",
   "main": "dist/cjs",
@@ -24,5 +24,5 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "gitHead": "17dd6e892571f69463a214ff07f8aa82f218e602"
+  "gitHead": "eda7fd979b58c9d3285b84d803aee9e730057d0a"
 }
