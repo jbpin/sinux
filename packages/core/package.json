@@ -1,6 +1,6 @@
 {
   "name": "@sinuxjs/core",
-  "version": "1.0.0-alpha.2",
+  "version": "0.0.2",
   "publishConfig": {
     "access": "public"
   },
