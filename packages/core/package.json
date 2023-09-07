@@ -1,6 +1,6 @@
 {
   "name": "@sinux/core",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "publishConfig": {
     "access": "public"
   },
@@ -16,5 +16,6 @@
     "package.json",
     "README.md",
     "LICENSE"
-  ]
+  ],
+  "gitHead": "17dd6e892571f69463a214ff07f8aa82f218e602"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@sinux/react",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "license": "MIT",
   "main": "dist/cjs",
   "types": "dist/cjs/src",
@@ -23,5 +23,6 @@
   "devDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-  }
+  },
+  "gitHead": "17dd6e892571f69463a214ff07f8aa82f218e602"
 }
