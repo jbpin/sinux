@@ -1,6 +1,6 @@
 {
   "name": "@sinux/react",
-  "version": "0.2.1",
+  "version": "1.0.0-alpha.0",
   "license": "MIT",
   "main": "dist/cjs",
   "types": "dist/cjs/src",
