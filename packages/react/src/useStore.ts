@@ -1,41 +1,26 @@
-import { Store, createStore } from '@sinux/core';
 import * as useSyncExternalStoreExports from 'use-sync-external-store/shim/with-selector';
 const { useSyncExternalStoreWithSelector } = useSyncExternalStoreExports;
+import { CombinedStore, ExtractStoreTypesFromArray } from './types';
+import { Store } from '@sinuxjs/core';
 
-type TupleToIntersection<T> = (T extends any ? (k: T) => void : never) extends (k: infer I) => void ? I : never;
-type ExtractStoreType<S> = S extends Store<infer T> ? T : never;
-
-type CombineStates<S extends Store<any>[]> = TupleToIntersection<{
-  [K in keyof S]: ExtractStoreType<S[K]>;
-}[number]>;
-
-type ExtractStoreTypesFromArray<S extends Store<any>[] | Store<any>> = S extends Store<any> ? ExtractStoreType<S> : S extends Store<any>[] ? CombineStates<S> : never;
-
-export function useStore<T extends Store<any>[] | Store<any>, U extends Partial<ExtractStoreTypesFromArray<T>>>(
-  stores: T,
-  selector: (state: ExtractStoreTypesFromArray<T>) => U,
-  equalityFn?: (a: ExtractStoreTypesFromArray<T>, b: ExtractStoreTypesFromArray<T>) => boolean
+export function useStore<T extends Store<any>, U extends Partial<ExtractStoreTypesFromArray<T>>>(
+  store: T,
+  selector?: (state: ExtractStoreTypesFromArray<T>) => U,
+  equalityFn?: (a: U, b: U) => boolean
 ): U {
-  const storesArr: Store<T>[] = [].concat(stores);
-  let value: ExtractStoreTypesFromArray<T> = storesArr.reduce(
-    (acc, s) => ({ ...acc, ...s.getState() }),
-    {} as ExtractStoreTypesFromArray<T>
-  );
-
-  const subscribe = (cb) => {
-    const onChanged = (state) => {
-      value = { ...value, ...state };
-      cb();
-    };
-    storesArr.forEach((s) => s.changed.add(onChanged));
-    return () => {
-      storesArr.forEach((s) => s.changed.remove(onChanged));
-    };
-  };
-
-  const snapshot = () => value;
-  const load = () => storesArr.forEach((s) => s['load']?.());
-
-  return useSyncExternalStoreWithSelector(subscribe, snapshot, load, selector, equalityFn) as U;
+  const load = () => {};
+  const snapshot = () => store.state;
+  selector = selector ? selector : (state: typeof store.state) => state as any
+  return useSyncExternalStoreWithSelector(store.subscribe, snapshot, load, selector, equalityFn) as U;
 }
 
+
+export function useStores<T extends Store<any>[], U extends Partial<ExtractStoreTypesFromArray<T>>> (
+  combinedStore: CombinedStore<T>,
+  selector?: (state: typeof combinedStore.state) => U,
+  equalityFn?: (a: U, b: U) => boolean
+): U {
+  const load = () => {};
+  selector = selector ? selector : (state: typeof combinedStore.state) => state as any
+  return useSyncExternalStoreWithSelector(combinedStore.subscribe, combinedStore.snapshot, load, selector, equalityFn) as U;
+};

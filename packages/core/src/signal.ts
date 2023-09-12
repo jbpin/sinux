@@ -17,7 +17,7 @@ export class Signal<T, U extends (...args) => any> {
     // compute listener promise
     let result;
     for (let c of this.commands) {
-      const r = await c.call(args);
+      const r = await c.apply(null, args);
       if (this.commands.size === 1) {
         result = r;
       } else {

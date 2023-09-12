@@ -14,10 +14,10 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@sinux/core": [
+      "@sinuxjs/core": [
         "packages/core/src"
       ],
-      "@sinux/react": [
+      "@sinuxjs/react": [
         "packages/react/src"
       ]
     }

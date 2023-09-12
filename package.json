@@ -1,5 +1,5 @@
 {
-  "name": "sinux",
+  "name": "sinuxjs",
   "version": "1.0.0",
   "private": true,
   "description": "Sate management library implementing Facebook Flux architecture based on self dispatching signal",

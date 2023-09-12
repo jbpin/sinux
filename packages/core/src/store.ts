@@ -54,4 +54,11 @@ export class Store<T> {
     this.changed.dispatch(this.getState());
     return this.getState();
   }
+
+  subscribe = (cb): ()=> void => {
+    this.changed.add(cb);
+    return () => {
+      this.changed.remove(cb);
+    };
+  };
 }
