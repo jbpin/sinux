@@ -1,5 +1,5 @@
-import { createStore as coreCreateStore, Store } from '@sinuxjs/core';
-import { CombinedStore, ExtractStoreTypesFromArray } from './types';
+import { Store } from '@sinuxjs/core';
+import { CombinedStore } from './types';
 
 export { useStore, useStores } from './useStore';
 

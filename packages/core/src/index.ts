@@ -1,4 +1,3 @@
-export { Signal } from './signal';
 import { Signal } from './signal';
 import { Store } from './store';
 import { TransformArgumentsToSignalInstances, SignalDef } from './types';
@@ -27,3 +26,4 @@ export function createStore<T, U extends SignalDef<T> = SignalDef<T>>(
 }
 
 export { Store };
+export { Signal } from './signal';
