@@ -21,6 +21,7 @@ export function createStore<T, U extends SignalDef<T> = SignalDef<T>>(
         return this.updateState(newState);
       });
     }.bind(store);
+    ExtendedStore.prototype[methodName].__proto__ = s;
   }
   return store as Store<T> & TransformArgumentsToSignalInstances<T, U>;
 }
