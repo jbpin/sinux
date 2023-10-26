@@ -8,7 +8,7 @@ export type FunctionFromTuple<T, U extends any[]> = (...args: OmitState<U>) => P
 
 export type SignalFunction<T, U extends (state: T, ...args: any) => any> = Signal<T, U> & FunctionFromTuple<T, Parameters<U>>;
 
-export type SignalDef<T> = Record<string, (state: T, ...args: any) => void | Partial<T> | Promise<void | Partial<T>>> | string[];
+export type SignalDef<T> = Record<string, (state: T, ...args: any) => void | Partial<T> | Promise< void | Partial<T> >> | string[];
 
 export type TransformArgumentsToSignalInstances<
   T,
