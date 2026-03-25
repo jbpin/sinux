@@ -11,8 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://sinuxjs.dev',
-  baseUrl: '/',
+  url: 'https://jbpin.github.io',
+  baseUrl: '/sinux/',
 
   organizationName: 'jbpin',
   projectName: 'sinux',
