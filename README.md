@@ -12,7 +12,7 @@
 Sinux replaces free-form state mutators with **named, async, composable signals**.
 Every action is traceable. Every mutation has a name.
 
-[Documentation](https://sinuxjs.dev) &bull; [Getting Started](https://sinuxjs.dev/docs/getting-started) &bull; [Examples](https://sinuxjs.dev/docs/examples/todo-app)
+[Documentation](https://jbpin.github.io/sinux) &bull; [Getting Started](https://jbpin.github.io/sinux/docs/getting-started) &bull; [Examples](https://jbpin.github.io/sinux/docs/examples/todo-app)
 
 </div>
 
