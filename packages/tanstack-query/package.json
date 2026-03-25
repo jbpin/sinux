@@ -1,0 +1,47 @@
+{
+  "name": "@sinuxjs/tanstack-query",
+  "version": "2.0.0",
+  "license": "MIT",
+  "main": "dist/cjs",
+  "types": "dist/cjs/src",
+  "module": "dist/esm",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/cjs/src/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/esm/react/index.js",
+      "require": "./dist/cjs/react/index.js",
+      "types": "./dist/cjs/src/react/index.d.ts"
+    },
+    "./trpc": {
+      "import": "./dist/esm/trpc/index.js",
+      "require": "./dist/cjs/trpc/index.js",
+      "types": "./dist/cjs/src/trpc/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "rollup -c ../../rollup.config.mjs"
+  },
+  "files": [
+    "dist/**",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "@sinuxjs/core": ">=1.0.0",
+    "@tanstack/react-query": ">=5",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

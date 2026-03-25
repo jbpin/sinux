@@ -1,4 +1,5 @@
 import {Signal} from './signal'
+import {shallowEqual} from './utils'
 
 export class Store<T> {
   private resetSignal: Signal<T, () => void>
@@ -33,7 +34,7 @@ export class Store<T> {
         throw new Error('This signal is already present. You can\'t add it.');
       }
       this[name] = (...args) => {
-        return Signal.prototype.dispatch.call(this, this.getState(), ...args).then((newState) => {
+        return s.dispatch(this.getState(), ...args).then((newState) => {
           return this.updateState(newState);
         });
       };
@@ -49,8 +50,11 @@ export class Store<T> {
     if (!payload){
       return;
     }
-    //TODO: dispatch only if state changed
-    this.state = {...this.state, ...payload};
+    const nextState = {...this.state, ...payload};
+    if (shallowEqual(this.state, nextState)) {
+      return this.getState();
+    }
+    this.state = nextState;
     this.changed.dispatch(this.getState());
     return this.getState();
   }

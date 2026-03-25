@@ -1,0 +1,26 @@
+---
+sidebar_position: 3
+---
+
+# Immer
+
+```typescript
+import { createStore, immer } from '@sinuxjs/core';
+
+const store = createStore(
+  { items: [{ id: 1, text: 'Hello', done: false }] },
+  {
+    toggleItem: (state, id: number) => {
+      // Mutate the draft directly -- immer makes it immutable
+      const item = state.items.find(i => i.id === id);
+      if (item) item.done = !item.done;
+    },
+  },
+  [immer()]
+);
+```
+
+- All signal handlers receive an [Immer](https://immerjs.github.io/immer/) draft
+- Mutate directly -- no spread operators needed
+- Backward compatible: returning an object still works
+- `immer` is a peer dependency -- install it separately: `npm install immer`

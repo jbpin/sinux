@@ -1,0 +1,61 @@
+---
+sidebar_position: 7
+---
+
+# Plugins
+
+Sinux provides a Claude Code plugin marketplace that teaches AI assistants how to work with Sinux. Install the plugin and Claude will know how to create stores, write signal handlers, build middleware, and integrate with TanStack Query or Apollo Client.
+
+## Install the Marketplace
+
+Add the Sinux marketplace to Claude Code:
+
+```
+/plugin marketplace add jbpin/sinux
+```
+
+## Install the Plugin
+
+```
+/plugin install sinux-plugin@sinux-marketplace
+```
+
+## What's Included
+
+The **sinux-plugin** is a comprehensive skill that covers:
+
+- Store creation with `createStore` (record and array signal definitions)
+- Signal handler patterns (sync, async, generators)
+- React integration (`useStore`, `useComputed`, `combine`)
+- Middleware system (`persist`, `devtools`, `immer`, custom)
+- TanStack Query integration (`querySignal`, `mutationSignal`, `fromTRPC`)
+- Apollo Client integration (`graphqlQuery`, `graphqlMutation`)
+- Multi-store patterns and optimistic updates
+
+Once installed, Claude knows the full Sinux API and can generate correct code for any Sinux use case.
+
+## Auto-enable for Your Team
+
+Add to your project's `.claude/settings.json` so team members get the marketplace automatically:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "sinux-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "jbpin/sinux"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "sinux-plugin@sinux-marketplace": true
+  }
+}
+```
+
+## Contributing Plugins
+
+Want to add your own Sinux plugin to the marketplace? Open a PR on [github.com/jbpin/sinux](https://github.com/jbpin/sinux) adding your plugin to the `plugins/` directory and registering it in `.claude-plugin/marketplace.json`.
+
+See the [Claude Code plugin marketplace docs](https://code.claude.com/docs/en/plugin-marketplaces) for the full guide.

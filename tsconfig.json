@@ -10,6 +10,7 @@
     "declarationMap": false,
     "moduleResolution": "node",
     "sourceMap": false,
+    "skipLibCheck": true,
     "declarationDir": "dist",
     "baseUrl": "./",
     "incremental": true,

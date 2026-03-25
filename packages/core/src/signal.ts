@@ -1,6 +1,15 @@
+async function runGenerator(gen: Generator): Promise<any> {
+  let step = gen.next();
+  while (!step.done) {
+    const value = await step.value;
+    step = gen.next(value);
+  }
+  return step.value;
+}
+
 export class Signal<T, U extends (...args) => any> {
   name: string;
-  private commands: Set<Function>;
+  commands: Set<Function>;
 
   constructor(name?: string){
     this.name = name || Math.random().toString(36).slice(2, 5);
@@ -17,7 +26,11 @@ export class Signal<T, U extends (...args) => any> {
     // compute listener promise
     let result;
     for (let c of this.commands) {
-      const r = await c.apply(null, args);
+      let r = await c.apply(null, args);
+      // Handle generator iterators (like co)
+      if (r && typeof r.next === 'function' && typeof r[Symbol.iterator] === 'function') {
+        r = await runGenerator(r);
+      }
       if (this.commands.size === 1) {
         result = r;
       } else {

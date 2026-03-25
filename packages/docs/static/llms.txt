@@ -1,0 +1,21 @@
+# Sinux - Signal-driven state management
+
+## Overview
+Sinux is a state management library for React implementing Facebook Flux architecture with self-dispatching signals.
+
+## Packages
+- @sinuxjs/core: Store, Signal, createStore, computed, computedFrom, middlewares (persist, devtools, immer)
+- @sinuxjs/react: useStore, useStores, useComputed, combine
+- @sinuxjs/tanstack-query: querySignal, mutationSignal, tanstackQuery middleware
+- @sinuxjs/apollo: graphqlQuery, graphqlMutation, apolloClient middleware
+
+## Key Concepts
+- Stores hold state and expose named signal methods
+- Signals are async commands that update state: store.mySignal(args) -> Promise<Partial<T>>
+- Middleware intercepts dispatches: onInit, onDispatch, onStateChange
+- React hooks use useSyncExternalStore for concurrent-safe subscriptions
+
+## Links
+- Docs: /docs/intro
+- Getting Started: /docs/getting-started
+- GitHub: https://github.com/jbpin/sinux

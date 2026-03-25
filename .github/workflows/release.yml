@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          registry-url: https://registry.npmjs.org
+
+      - run: yarn --frozen-lockfile
+
+      - name: Build core
+        run: cd packages/core && ../../node_modules/.bin/rollup -c ../../rollup.config.mjs
+
+      - name: Build react
+        run: cd packages/react && ../../node_modules/.bin/rollup -c ../../rollup.config.mjs
+
+      - name: Build tanstack-query
+        run: cd packages/tanstack-query && ../../node_modules/.bin/rollup -c ../../rollup.config.mjs
+
+      - name: Build apollo
+        run: cd packages/apollo && ../../node_modules/.bin/rollup -c ../../rollup.config.mjs
+
+      - name: Run tests
+        run: npx vitest run
+
+      # Trusted publishers: OIDC auth, no NPM_TOKEN needed
+      # Provenance is generated automatically
+      # Configure each package at npmjs.com > Settings > Trusted Publishing:
+      #   Owner: jbpin, Repo: sinux, Workflow: release.yml
+
+      - name: Publish @sinuxjs/core
+        run: cd packages/core && npm publish --access public || true
+
+      - name: Publish @sinuxjs/react
+        run: cd packages/react && npm publish --access public || true
+
+      - name: Publish @sinuxjs/tanstack-query
+        run: cd packages/tanstack-query && npm publish --access public || true
+
+      - name: Publish @sinuxjs/apollo
+        run: cd packages/apollo && npm publish --access public || true
+
+      - name: Package skill
+        run: cd skills/sinux && zip -r ../../skills/dist/sinux.skill . && cd ../..
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          gh release create "$TAG" --generate-notes skills/dist/sinux.skill

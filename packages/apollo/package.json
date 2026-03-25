@@ -1,0 +1,25 @@
+{
+  "name": "@sinuxjs/apollo",
+  "version": "2.0.0",
+  "license": "MIT",
+  "main": "dist/cjs",
+  "types": "dist/cjs/src",
+  "module": "dist/esm",
+  "scripts": {
+    "build": "rollup -c ../../rollup.config.mjs"
+  },
+  "files": [
+    "dist/**",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "@sinuxjs/core": ">=1.0.0",
+    "@apollo/client": ">=3.8",
+    "graphql": ">=16"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

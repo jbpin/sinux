@@ -2,6 +2,7 @@ import { Store } from '@sinuxjs/core';
 import { CombinedStore } from './types';
 
 export { useStore, useStores } from './useStore';
+export { useComputed } from './useComputed';
 
 export function combine<T extends Store<any>[]>(
   ...stores: T

@@ -1,5 +1,5 @@
 import typescript from 'rollup-plugin-typescript2';
-import pkgc from './package.json' assert { type: 'json' };
+import pkgc from './package.json' with { type: 'json' };
 import {nodeResolve} from '@rollup/plugin-node-resolve';
 import * as fs from "fs";
 import path from "path";

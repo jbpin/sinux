@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --ifm-color-primary: #6C5CE7;
+  --ifm-color-primary-dark: #5B4AD6;
+  --ifm-color-primary-darker: #5040CC;
+  --ifm-color-primary-darkest: #4234A8;
+  --ifm-color-primary-light: #7D6FF0;
+  --ifm-color-primary-lighter: #8A7EF3;
+  --ifm-color-primary-lightest: #A89DF7;
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'Fira Code', monospace;
+  --ifm-code-font-size: 90%;
+  --ifm-heading-font-weight: 700;
+  --docusaurus-highlighted-code-line-bg: rgba(108, 92, 231, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-background-color: #1A1A2E;
+  --ifm-color-primary: #7D6FF0;
+  --ifm-color-primary-dark: #6C5CE7;
+  --ifm-color-primary-darker: #5B4AD6;
+  --ifm-color-primary-darkest: #4234A8;
+  --ifm-color-primary-light: #8A7EF3;
+  --ifm-color-primary-lighter: #A89DF7;
+  --ifm-color-primary-lightest: #C4BAFC;
+  --docusaurus-highlighted-code-line-bg: rgba(125, 111, 240, 0.2);
+}
