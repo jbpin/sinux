@@ -1,0 +1,86 @@
+---
+sidebar_position: 1
+---
+
+# TanStack Query
+
+Sinux signals as the single interface for both client and server state.
+
+```bash
+npm install @sinuxjs/tanstack-query @tanstack/react-query
+```
+
+## Query Signal
+
+```typescript
+import { createStore } from '@sinuxjs/core';
+import { querySignal, tanstackQuery } from '@sinuxjs/tanstack-query';
+
+const userStore = createStore(
+  { users: [], loading: false },
+  {
+    loadUsers: querySignal({
+      queryKey: ['users'],
+      queryFn: () => fetch('/api/users').then(r => r.json()),
+      mapToState: (data) => ({ users: data, loading: false }),
+      onFetch: () => ({ loading: true }),
+    }),
+  },
+  [tanstackQuery({ queryClient })]
+);
+
+await userStore.loadUsers(); // fetches, caches, updates store
+```
+
+## Mutation Signal with Optimistic Updates
+
+```typescript
+const store = createStore(
+  { todos: [] },
+  {
+    addTodo: mutationSignal({
+      mutationFn: (text) => api.post('/todos', { text }),
+      optimistic: (state, text) => ({
+        todos: [...state.todos, { text, id: 'temp', pending: true }]
+      }),
+      mapToState: (data, state) => ({
+        todos: state.todos.map(t => t.id === 'temp' ? data : t)
+      }),
+      invalidates: [['todos']],
+    }),
+  },
+  [tanstackQuery({ queryClient })]
+);
+```
+
+## Auto-fetch hook
+
+```tsx
+import { useQuerySignal } from '@sinuxjs/tanstack-query/react';
+const users = useQuerySignal(userStore, 'loadUsers', [], s => s.users);
+```
+
+## tRPC adapter
+
+```typescript
+import { fromTRPC } from '@sinuxjs/tanstack-query/trpc';
+
+const store = createStore(
+  { users: [] },
+  fromTRPC(trpc, {
+    loadUsers: { procedure: 'users.list', type: 'query', mapToState: (d) => ({ users: d }) },
+    createUser: { procedure: 'users.create', type: 'mutation', mapToState: (d, s) => ({ users: [...s.users, d] }) },
+  }),
+  [tanstackQuery({ queryClient })]
+);
+```
+
+## API Reference
+
+| Export | Description |
+|--------|-------------|
+| `querySignal(opts)` | Signal factory for queries |
+| `mutationSignal(opts)` | Signal factory for mutations |
+| `tanstackQuery({ queryClient })` | Middleware |
+| `useQuerySignal(store, signal)` | Auto-fetch React hook |
+| `fromTRPC(client, procedures)` | tRPC adapter |

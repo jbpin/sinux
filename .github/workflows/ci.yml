@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: yarn --frozen-lockfile
+
+      - name: Run tests
+        run: npx vitest run
+
+      - name: Type-check core
+        run: npx tsc --noEmit -p packages/core/tsconfig.json
+
+      - name: Type-check react
+        run: npx tsc --noEmit -p packages/react/tsconfig.json
+
+      - name: Type-check tanstack-query
+        run: npx tsc --noEmit -p packages/tanstack-query/tsconfig.json
+
+      - name: Type-check apollo
+        run: npx tsc --noEmit -p packages/apollo/tsconfig.json

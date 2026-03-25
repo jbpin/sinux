@@ -1,0 +1,29 @@
+{
+  "name": "sinux-marketplace",
+  "owner": {
+    "name": "jbpin",
+    "email": "jeanbaptiste.pin@gmail.com"
+  },
+  "metadata": {
+    "description": "Official Sinux plugins for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "sinux-plugin",
+      "source": "./plugins/sinux-plugin",
+      "description": "Sinux skill for Claude Code — teaches stores, signals, middleware, React hooks, TanStack Query, and Apollo Client integration",
+      "version": "1.0.0",
+      "author": {
+        "name": "jbpin",
+        "email": "jeanbaptiste.pin@gmail.com"
+      },
+      "homepage": "https://sinuxjs.dev",
+      "repository": "https://github.com/jbpin/sinux",
+      "license": "MIT",
+      "keywords": ["sinux", "state-management", "react", "signals", "flux", "tanstack", "apollo", "graphql"],
+      "category": "development",
+      "tags": ["state-management", "react", "graphql"]
+    }
+  ]
+}

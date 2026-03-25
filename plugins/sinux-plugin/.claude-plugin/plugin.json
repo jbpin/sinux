@@ -1,0 +1,5 @@
+{
+  "name": "sinux-plugin",
+  "description": "Sinux skill for Claude Code — teaches stores, signals, middleware, React hooks, TanStack Query, and Apollo Client integration",
+  "version": "1.0.0"
+}

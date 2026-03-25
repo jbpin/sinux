@@ -24,4 +24,15 @@ build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
+node_modules/
+
+lerna-debug.log
+npm-debug.log
+packages/*/dist
+packages/docs/build
+packages/docs/.docusaurus
+skills/dist
+.idea
+.npmrc
+.claude/
+.DS_Store
