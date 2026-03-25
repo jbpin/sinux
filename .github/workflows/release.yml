@@ -21,6 +21,9 @@ jobs:
           cache: yarn
           registry-url: https://registry.npmjs.org
 
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - run: yarn --frozen-lockfile
 
       - name: Build core
@@ -39,9 +42,8 @@ jobs:
         run: npx vitest run
 
       # Trusted publishers: OIDC auth, no NPM_TOKEN needed
-      # Provenance is generated automatically
-      # Configure each package at npmjs.com > Settings > Trusted Publishing:
-      #   Owner: jbpin, Repo: sinux, Workflow: release.yml
+      # Requires npm >= 11.5.1 for automatic provenance
+      # Configure each package at npmjs.com > Settings > Trusted Publishing
 
       - name: Publish @sinuxjs/core
         run: cd packages/core && npm publish --access public || true
@@ -63,4 +65,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="${GITHUB_REF#refs/tags/}"
-          gh release create "$TAG" --generate-notes dist/sinux-plugin.zip
+          gh release create "$TAG" --generate-notes dist/sinux-plugin.zip || gh release upload "$TAG" dist/sinux-plugin.zip --clobber
