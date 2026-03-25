@@ -55,12 +55,12 @@ jobs:
       - name: Publish @sinuxjs/apollo
         run: cd packages/apollo && npm publish --access public || true
 
-      - name: Package skill
-        run: cd skills/sinux && zip -r ../../skills/dist/sinux.skill . && cd ../..
+      - name: Package plugin
+        run: mkdir -p dist && cd plugins/sinux-plugin && zip -r ../../dist/sinux-plugin.zip .
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="${GITHUB_REF#refs/tags/}"
-          gh release create "$TAG" --generate-notes skills/dist/sinux.skill
+          gh release create "$TAG" --generate-notes dist/sinux-plugin.zip
