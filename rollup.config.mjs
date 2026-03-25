@@ -27,7 +27,7 @@ const nodeOptions = {
 
 export default {
   input: `${PACKAGE_NAME}/src/index.ts`,
-  external: [...Object.keys(pkgc.peerDependencies)||{}, 'use-sync-external-store/shim/with-selector'],
+  external: [...Object.keys(pkgc.peerDependencies)||{}, 'use-sync-external-store/shim', 'use-sync-external-store/shim/with-selector'],
   output: [
     {
       dir: pkg.main,
