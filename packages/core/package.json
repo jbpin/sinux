@@ -5,6 +5,11 @@
     "access": "public"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbpin/sinux",
+    "directory": "packages/core"
+  },
   "main": "dist/cjs",
   "types": "dist/cjs/src",
   "module": "dist/esm",
