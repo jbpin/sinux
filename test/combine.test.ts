@@ -49,6 +49,9 @@ describe('combine', () => {
     await storeB.setAge(25);
     expect(cb).toHaveBeenCalledTimes(2);
     expect(combined.snapshot()).toEqual({ name: 'Bob', age: 25 });
+
+    // combined.state must also reflect the latest state (not stale initial)
+    expect(combined.state).toEqual({ name: 'Bob', age: 25 });
   });
 
   it('should unsubscribe from all stores', async () => {

@@ -10,7 +10,7 @@ export function combine<T extends Store<any>[]>(
 ): CombinedStore<T> {
   let value = stores.slice(1).reduce((acc, s) => ({ ...acc, ...s.getState() }), stores[0].getState());
   return {
-    state: value,
+    get state() { return value; },
     snapshot: () => value,
     subscribe: (cb) => {
       const unsubs = stores.map(s => s.subscribe(() => {

@@ -1,6 +1,6 @@
 {
   "name": "sinuxjs",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "private": true,
   "description": "Signal-driven state management for React",
   "workspaces": [
