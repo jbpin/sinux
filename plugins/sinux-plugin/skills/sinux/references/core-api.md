@@ -22,7 +22,7 @@ function createStore<T, U extends SignalDef<T>>(
 |--------|-----------|-------------|
 | `getState()` | `() => T` | Returns shallow copy |
 | `updateState(partial)` | `(Partial<T> \| void) => T \| void` | Merge + notify if changed (shallow equality) |
-| `subscribe(cb)` | `(cb: (state: T) => any) => () => void` | Returns unsubscribe |
+| `subscribe(cb)` | `(cb: () => void) => () => void` | Returns unsubscribe. Callback receives no arguments — use `getState()` to read current state. |
 | `resetStore()` | `() => Promise<void>` | Reset to initial state |
 | `addSignals(...signals)` | `(...(Signal \| string)[]) => void` | Add signals dynamically |
 
@@ -54,6 +54,14 @@ function createStore<T, U extends SignalDef<T>>(
 Multiple handlers merge results (objects spread, arrays concat).
 
 ### Async Behavior
+
+**All signal calls are async and return Promises.** Always `await` them:
+
+```typescript
+await store.increment();       // ✓
+await store.add(5);            // ✓
+store.increment();             // ✗ fires but won't wait for completion
+```
 
 - **Promises**: Awaited automatically. Return `Promise<Partial<T>>`.
 - **Generators**: Iterated sequentially. Yielded values are awaited, results passed back via `next()`. Final return value becomes state update.

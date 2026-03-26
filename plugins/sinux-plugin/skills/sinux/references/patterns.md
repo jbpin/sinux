@@ -91,8 +91,8 @@ function CartTotal() {
 ## Subscribe to State Changes (Outside React)
 
 ```typescript
-const unsubscribe = store.subscribe((state) => {
-  console.log('State changed:', state);
+const unsubscribe = store.subscribe(() => {
+  console.log('State changed:', store.getState());
 });
 
 // later:
