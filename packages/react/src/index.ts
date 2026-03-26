@@ -1,5 +1,6 @@
 import { Store } from '@sinuxjs/core';
 import { CombinedStore } from './types';
+export type { CombinedStore, CombineStates, ExtractStoreTypesFromArray } from './types';
 
 export { useStore, useStores } from './useStore';
 export { useComputed } from './useComputed';
