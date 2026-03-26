@@ -9,23 +9,24 @@ npm install @sinuxjs/tanstack-query @tanstack/react-query
 ## querySignal
 
 ```typescript
-function querySignal<T, TData>(opts: {
-  queryKey: QueryKey | ((...args: any[]) => QueryKey);
-  queryFn: (...args: any[]) => Promise<TData>;
+function querySignal<T, TData = any, TArgs extends any[] = any[]>(opts: {
+  queryKey: QueryKey | ((...args: TArgs) => QueryKey);
+  queryFn: (...args: TArgs) => Promise<TData>;
   mapToState: (data: TData, state: T) => Partial<T>;
-  onFetch?: (state: T) => Partial<T>;
-  onError?: (error: Error, state: T) => Partial<T>;
+  onFetch?: (state: T, ...args: TArgs) => Partial<T>;
+  onError?: (error: unknown, state: T, ...args: TArgs) => Partial<T>;
   staleTime?: number;
   gcTime?: number;
-  fetchPolicy?: string;
   select?: (data: TData) => any;
 })
 ```
 
 Returns a signal handler with `QUERY_SIGNAL` metadata. Without the `tanstackQuery` middleware: falls back to direct fetch via `queryFn`.
 
+`TArgs` is inferred from `queryFn` — signal args are fully typed and passed through to `queryKey`, `queryFn`, `onFetch`, and `onError`.
+
 - `queryKey`: static array or function deriving key from signal args.
-- `queryFn`: fetch function.
+- `queryFn`: fetch function — receives the signal's args (e.g. `await store.loadUser(id)` → `queryFn: (id) => fetch(...)`).
 - `mapToState`: transform query data into state partial.
 - `onFetch`: state update applied immediately when fetch starts (use for loading flags).
 - `onError`: state update on error.
@@ -33,11 +34,11 @@ Returns a signal handler with `QUERY_SIGNAL` metadata. Without the `tanstackQuer
 ## mutationSignal
 
 ```typescript
-function mutationSignal<T, TData>(opts: {
-  mutationFn: (...args: any[]) => Promise<TData>;
+function mutationSignal<T, TData = any, TArgs extends any[] = any[]>(opts: {
+  mutationFn: (...args: TArgs) => Promise<TData>;
   mapToState: (data: TData, state: T) => Partial<T>;
-  optimistic?: (state: T, ...args: any[]) => Partial<T>;
-  onError?: (error: Error, state: T) => Partial<T> | void;
+  optimistic?: (state: T, ...args: TArgs) => Partial<T>;
+  onError?: (error: unknown, state: T, ...args: TArgs) => Partial<T> | void;
   invalidates?: QueryKey[];
   awaitInvalidation?: boolean;
 })
