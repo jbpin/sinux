@@ -13,14 +13,11 @@ export function combine<T extends Store<any>[]>(
     state: value,
     snapshot: () => value,
     subscribe: (cb) => {
-      const onChanged = (state) => {
-        value = { ...value, ...state };
+      const unsubs = stores.map(s => s.subscribe(() => {
+        value = stores.reduce((acc, store) => ({ ...acc, ...store.getState() }), {} as any);
         cb();
-      };
-      stores.forEach((s) => s.changed.add(onChanged));
-      return () => {
-        stores.forEach((s) => s.changed.remove(onChanged));
-      };
+      }));
+      return () => unsubs.forEach(fn => fn());
     },
   };
 }

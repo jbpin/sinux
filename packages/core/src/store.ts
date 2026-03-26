@@ -3,9 +3,14 @@ import {shallowEqual} from './utils'
 
 export class Store<T> {
   private resetSignal: Signal<T, () => void>
-  
+  private _listeners = new Set<() => void>();
+
   state:T
   changed: Signal<T, (state:T)=> any>
+
+  private _notifyListeners() {
+    this._listeners.forEach(cb => cb());
+  }
 
   constructor(initialState: T, ...signals: (Signal<T, any>|string)[]){
     this.state = initialState;
@@ -15,6 +20,7 @@ export class Store<T> {
     this.resetSignal = new Signal('resetStore');
     this.resetSignal.add(() => {
       this.state = initialState;
+      this._notifyListeners();
       this.changed.dispatch(this.getState());
     });
     
@@ -55,14 +61,15 @@ export class Store<T> {
       return this.getState();
     }
     this.state = nextState;
+    this._notifyListeners();
     this.changed.dispatch(this.getState());
     return this.getState();
   }
 
-  subscribe = (cb): ()=> void => {
-    this.changed.add(cb);
+  subscribe = (cb: () => void): ()=> void => {
+    this._listeners.add(cb);
     return () => {
-      this.changed.remove(cb);
+      this._listeners.delete(cb);
     };
   };
 }
