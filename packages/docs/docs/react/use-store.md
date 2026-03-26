@@ -11,17 +11,20 @@ function UserProfile() {
   // Full state
   const state = useStore(userStore);
 
-  // With selector (recommended -- only re-renders when selected slice changes)
-  const name = useStore(userStore, s => s.name);
+  // With selector (recommended — group fields, destructure the result)
+  const { name, email } = useStore(userStore, s => ({ name: s.name, email: s.email }));
 
   // With custom equality
-  const items = useStore(store, s => s.items, (a, b) => a.length === b.length);
+  const { items } = useStore(store, s => ({ items: s.items }), (a, b) => a.items.length === b.items.length);
 }
 ```
 
-- Uses `useSyncExternalStoreWithSelector` internally -- concurrent-safe
+- Uses `useSyncExternalStoreWithSelector` internally — concurrent-safe
 - Selectors prevent unnecessary re-renders (only re-renders when selected value changes)
 - Custom `equalityFn` for advanced comparison
+- **Group related fields in a single selector** — avoid calling `useStore` multiple times on the same store
+
+> **Signals are not state.** Never destructure signals from the store. Always call them directly: `userStore.updateName('Jane')`, not `const { updateName } = userStore`.
 
 ## API
 
