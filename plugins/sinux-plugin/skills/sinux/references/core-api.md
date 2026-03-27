@@ -63,6 +63,21 @@ await store.add(5);            // ✓
 store.increment();             // ✗ fires but won't wait for completion
 ```
 
+**Signals return the updated store state (or undefined), NOT raw data.** Never use the return value to access data — read from the store:
+
+```typescript
+// ✗ WRONG — return value is the full store state, not the API response
+const data = await store.loadUsers();
+data.find(u => u.id === 1); // crash: find is not a function
+
+// ✓ CORRECT — signal updates the store, read state from the store
+await store.loadUsers();
+const { users } = store.getState();
+users.find(u => u.id === 1); // works
+```
+
+This applies to all signals including `querySignal` and `mutationSignal`. The store is the source of truth — signals are commands that update it.
+
 - **Promises**: Awaited automatically. Return `Promise<Partial<T>>`.
 - **Generators**: Iterated sequentially. Yielded values are awaited, results passed back via `next()`. Final return value becomes state update.
 

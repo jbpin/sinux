@@ -29,6 +29,13 @@ Signals are named async commands on the [store](/docs/concepts/store).
 - Multiple handlers on one signal execute sequentially, results are merged
 - Handlers can return `void` for side effects
 - Async handlers (Promises, async/await, generators) are awaited automatically
+- **Signals return the updated store state, not raw data** — always read from `getState()`:
+
+```typescript
+// Signal updates the store — read state from the store
+await store.addItem('hello');
+const { items } = store.getState();
+```
 
 ## String array vs record definition
 

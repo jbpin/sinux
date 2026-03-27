@@ -88,6 +88,24 @@ function CartTotal() {
 }
 ```
 
+## Reading Data After a Signal
+
+Signals are commands — they update the store. Always read data from the store, not from the signal's return value:
+
+```typescript
+// ✗ WRONG — signal returns full store state, not the raw API data
+const result = await store.loadItems();
+result.map(item => ...); // crash
+
+// ✓ CORRECT — read from store after signal completes
+await store.loadItems();
+const { items } = store.getState();
+items.map(item => ...); // works
+
+// ✓ In React — useStore handles this automatically
+const { items } = useStore(store, s => ({ items: s.items }));
+```
+
 ## Subscribe to State Changes (Outside React)
 
 ```typescript

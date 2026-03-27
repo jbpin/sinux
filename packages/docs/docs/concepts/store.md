@@ -15,9 +15,11 @@ const store = createStore(
   }
 );
 
-store.getState();          // { count: 0, name: 'world' }
-await store.increment();   // { count: 1, name: 'world' }
-await store.setName('Sinux'); // { count: 1, name: 'Sinux' }
+store.getState();              // { count: 0, name: 'world' }
+await store.increment();
+store.getState();              // { count: 1, name: 'world' }
+await store.setName('Sinux');
+store.getState();              // { count: 1, name: 'Sinux' }
 ```
 
 A store holds your application state. `createStore(initialState, signals, middlewares?)` is the factory function.
