@@ -1,5 +1,11 @@
 ---
+name: sinux
 description: "Sinux is a signal-driven state management library for React implementing Flux architecture. Stores hold state, signals are named async commands that update it. Use this skill when working with @sinuxjs/core, @sinuxjs/react, @sinuxjs/tanstack-query, or @sinuxjs/apollo — for creating stores, writing signal handlers, building middleware, integrating with TanStack Query or Apollo Client, or any Sinux-related code."
+license: MIT
+allowed-tools: Read
+metadata:
+  author: jbpin
+  version: "2.0"
 ---
 
 # Sinux
