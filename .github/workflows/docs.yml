@@ -40,6 +40,8 @@ jobs:
         working-directory: packages/docs
         run: |
           BASE="/sinux"
+
+          # HTML: rewrite root-relative href, src, content attributes
           find out -name '*.html' -exec sed -i \
             -e "s|href=\"/|href=\"${BASE}/|g" \
             -e "s|src=\"/|src=\"${BASE}/|g" \
@@ -50,10 +52,18 @@ jobs:
             -e "s|href=\"${BASE}/https|href=\"https|g" \
             -e "s|content=\"${BASE}/https|content=\"https|g" \
             {} +
+
+          # JS: rewrite asset paths and Next.js router basePath
           find out -name '*.js' -exec sed -i \
             -e "s|\"/_next/|\"${BASE}/_next/|g" \
             -e "s|\"/_mintlify/|\"${BASE}/_mintlify/|g" \
+            -e "s|addPathPrefix)(e,\"\")|addPathPrefix)(e,\"${BASE}\")|g" \
+            -e "s|basePath:\"\"|basePath:\"${BASE}\"|g" \
             {} +
+
+          # 404.html: copy index.html so GitHub Pages serves the SPA shell
+          # for any route, letting the client-side router handle navigation
+          cp out/index.html out/404.html
 
       - uses: actions/configure-pages@v4
         with:
