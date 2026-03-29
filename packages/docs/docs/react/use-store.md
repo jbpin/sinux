@@ -1,8 +1,8 @@
 ---
-title: "useStore"
-description: "React hook for subscribing to store state with selectors"
-icon: "brackets-curly"
+sidebar_position: 1
 ---
+
+# useStore
 
 ```tsx
 import { useStore } from '@sinuxjs/react';
@@ -24,9 +24,7 @@ function UserProfile() {
 - Custom `equalityFn` for advanced comparison
 - **Group related fields in a single selector** — avoid calling `useStore` multiple times on the same store
 
-<Warning>
-**Signals are not state.** Never destructure signals from the store. Always call them directly: `userStore.updateName('Jane')`, not `const { updateName } = userStore`.
-</Warning>
+> **Signals are not state.** Never destructure signals from the store. Always call them directly: `userStore.updateName('Jane')`, not `const { updateName } = userStore`.
 
 ## API
 

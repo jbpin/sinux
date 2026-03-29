@@ -1,8 +1,8 @@
 ---
-title: "Middleware"
-description: "Intercept and extend store behavior with onInit, onDispatch, and onStateChange hooks"
-icon: "layer-group"
+sidebar_position: 3
 ---
+
+# Middleware
 
 ```typescript
 import { createStore } from '@sinuxjs/core';
@@ -43,4 +43,4 @@ type MiddlewareConfig<T> = {
 };
 ```
 
-Built-in middlewares: [persist](/middlewares/persist), [devtools](/middlewares/devtools), [immer](/middlewares/immer).
+Built-in middlewares: [persist](/docs/middlewares/persist), [devtools](/docs/middlewares/devtools), [immer](/docs/middlewares/immer).

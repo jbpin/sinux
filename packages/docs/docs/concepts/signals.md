@@ -1,8 +1,8 @@
 ---
-title: "Signals"
-description: "Named async commands that update store state"
-icon: "signal"
+sidebar_position: 2
 ---
+
+# Signals
 
 ```typescript
 const store = createStore({ items: [] }, {
@@ -22,7 +22,7 @@ store.addItem.add((state, item) => {
 });
 ```
 
-Signals are named async commands on the [store](/concepts/store).
+Signals are named async commands on the [store](/docs/concepts/store).
 
 - Each signal is both callable (`store.signal(args)`) and a Signal instance (`store.signal.add(handler)`)
 - Handlers receive `(state, ...args)` and return `Partial<T>` or `Promise<Partial<T>>`
@@ -48,4 +48,4 @@ createStore(state, ['add', 'remove']);
 store.add.add((state, item) => ({ items: [...state.items, item] }));
 ```
 
-See also: [Store](/concepts/store), [Middleware](/concepts/middleware).
+See also: [Store](/docs/concepts/store), [Middleware](/docs/concepts/middleware).

@@ -1,8 +1,8 @@
 ---
-title: "useComputed"
-description: "React hook for subscribing to computed derived values"
-icon: "function"
+sidebar_position: 2
 ---
+
+# useComputed
 
 ```tsx
 import { computed } from '@sinuxjs/core';
@@ -18,6 +18,6 @@ function CartTotal() {
 }
 ```
 
-- Subscribes to a [computed](/concepts/computed) value
+- Subscribes to a [computed](/docs/concepts/computed) value
 - Re-renders only when the derived value changes
 - Uses `useSyncExternalStore` internally

@@ -1,8 +1,8 @@
 ---
-title: "Computed State"
-description: "Derive values from store state that auto-update when dependencies change"
-icon: "calculator"
+sidebar_position: 4
 ---
+
+# Computed State
 
 ```typescript
 import { createStore, computed, computedFrom } from '@sinuxjs/core';
@@ -29,4 +29,4 @@ import { useComputed } from '@sinuxjs/react';
 const name = useComputed(fullName);
 ```
 
-See also: [useComputed](/react/use-computed).
+See also: [useComputed](/docs/react/use-computed).

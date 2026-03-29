@@ -1,8 +1,8 @@
 ---
-title: "DevTools"
-description: "Connect stores to the Redux DevTools browser extension"
-icon: "bug"
+sidebar_position: 2
 ---
+
+# DevTools
 
 ```typescript
 import { createStore, devtools } from '@sinuxjs/core';
@@ -23,4 +23,4 @@ Connects to the [Redux DevTools](https://github.com/reduxjs/redux-devtools) brow
 | `name` | `string` | Store name in DevTools (default: 'Sinux Store') |
 | `enabled` | `boolean` | Disable in production |
 
-Sinux's named [signals](/concepts/signals) map perfectly to Redux action types -- no extra configuration needed.
+Sinux's named [signals](/docs/concepts/signals) map perfectly to Redux action types -- no extra configuration needed.

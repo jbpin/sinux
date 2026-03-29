@@ -1,8 +1,8 @@
 ---
-title: "Getting Started"
-description: "Install Sinux and create your first store in under 5 minutes"
-icon: "rocket"
+sidebar_position: 2
 ---
+
+# Getting Started
 
 ## Step 1: Install
 
@@ -40,7 +40,7 @@ function TodoList() {
     <ul>
       {todos.map(t => (
         <li key={t.id} onClick={() => todoStore.toggleTodo(t.id)}>
-          {t.done ? '✓' : '○'} {t.text}
+          {t.done ? '\u2713' : '\u25CB'} {t.text}
         </li>
       ))}
     </ul>
@@ -48,4 +48,4 @@ function TodoList() {
 }
 ```
 
-That's it. Learn more about [Stores](/concepts/store) and [Signals](/concepts/signals).
+That's it. Learn more about [Stores](/docs/concepts/store) and [Signals](/docs/concepts/signals).

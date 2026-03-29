@@ -1,8 +1,8 @@
 ---
-title: "What is Sinux?"
-description: "Signal-driven state management library for React built on Flux architecture"
-icon: "bolt"
+sidebar_position: 1
 ---
+
+# What is Sinux?
 
 ```typescript
 import { createStore } from '@sinuxjs/core';
@@ -25,4 +25,4 @@ Sinux is a signal-driven state management library for React. Built on Facebook's
 - **First-class Async**: Signal handlers return Promises. No thunks, no sagas, no extra middleware.
 - **Command Pipeline**: Stack multiple handlers on one signal with `store.signal.add()`.
 
-Ready? Jump to [Getting Started](/getting-started).
+Ready? Jump to [Getting Started](/docs/getting-started).

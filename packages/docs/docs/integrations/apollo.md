@@ -1,10 +1,10 @@
 ---
-title: "Apollo Client"
-description: "Use Sinux signals as the interface for Apollo GraphQL operations"
-icon: "circle-nodes"
+sidebar_position: 2
 ---
 
-Same pattern as [TanStack Query](/integrations/tanstack-query), for GraphQL with Apollo.
+# Apollo Client
+
+Same pattern as [TanStack Query](/docs/integrations/tanstack-query), for GraphQL with Apollo.
 
 ```bash
 npm install @sinuxjs/apollo @apollo/client graphql

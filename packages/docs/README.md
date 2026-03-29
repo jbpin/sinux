@@ -1,15 +1,20 @@
-# Sinux Documentation
+# Website
 
-Built with [Mintlify](https://mintlify.com/).
+This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+
+## Installation
+
+```bash
+yarn
+```
 
 ## Local Development
 
 ```bash
-yarn install
-yarn dev
+yarn start
 ```
 
-This starts a local preview at `http://localhost:3000`.
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
 ## Build
 
@@ -17,6 +22,20 @@ This starts a local preview at `http://localhost:3000`.
 yarn build
 ```
 
-## Configuration
+This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
-Edit `docs.json` to modify navigation, branding, and site settings.
+## Deployment
+
+Using SSH:
+
+```bash
+USE_SSH=true yarn deploy
+```
+
+Not using SSH:
+
+```bash
+GIT_USER=<Your GitHub username> yarn deploy
+```
+
+If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.

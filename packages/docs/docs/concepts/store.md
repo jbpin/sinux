@@ -1,8 +1,8 @@
 ---
-title: "Store"
-description: "Create stores to hold application state with createStore"
-icon: "database"
+sidebar_position: 1
 ---
+
+# Store
 
 ```typescript
 import { createStore } from '@sinuxjs/core';
@@ -39,4 +39,4 @@ A store holds your application state. `createStore(initialState, signals, middle
 | `subscribe(cb)` | `() => void` | Subscribe, returns unsubscribe |
 | `resetStore()` | `Promise` | Reset to initial state |
 
-See also: [Signals](/concepts/signals), [Middleware](/concepts/middleware).
+See also: [Signals](/docs/concepts/signals), [Middleware](/docs/concepts/middleware).

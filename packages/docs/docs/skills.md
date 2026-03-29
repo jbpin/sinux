@@ -1,8 +1,8 @@
 ---
-title: "Plugins"
-description: "Install the Sinux Claude Code plugin for AI-assisted development"
-icon: "plug"
+sidebar_position: 7
 ---
+
+# Plugins
 
 Sinux provides a Claude Code plugin marketplace that teaches AI assistants how to work with Sinux. Install the plugin and Claude will know how to create stores, write signal handlers, build middleware, and integrate with TanStack Query or Apollo Client.
 

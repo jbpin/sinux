@@ -1,8 +1,8 @@
 ---
-title: "Multi-Store"
-description: "Combine multiple stores and subscribe to their merged state"
-icon: "object-group"
+sidebar_position: 3
 ---
+
+# Multi-Store
 
 ```tsx
 import { combine, useStores } from '@sinuxjs/react';

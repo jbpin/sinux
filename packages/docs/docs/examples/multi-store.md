@@ -1,8 +1,8 @@
 ---
-title: "Multi-Store Triggering"
-description: "Orchestrate workflows across multiple stores from a single signal"
-icon: "diagram-project"
+sidebar_position: 3
 ---
+
+# Multi-Store Triggering
 
 One signal dispatching actions across multiple stores — orchestrating a workflow from a single entry point.
 
@@ -92,7 +92,7 @@ Each `yield` awaits the other store's signal before continuing. The generator's 
 
 ## React: subscribing to multiple stores
 
-Use [`combine`](/react/combine) to subscribe to all three stores at once:
+Use [`combine`](/docs/react/combine) to subscribe to all three stores at once:
 
 ```tsx
 import { combine, useStores } from '@sinuxjs/react';
@@ -128,4 +128,4 @@ function Header() {
 | `await otherStore.signal()` inside a handler | Trigger another store from within a signal |
 | Generators with `yield` | Sequential multi-store orchestration |
 | `combine()` + `useStores()` | Subscribe to multiple stores in one component |
-| [computed](/concepts/computed) with `computedFrom()` | Derive values from multiple stores |
+| [computed](/docs/concepts/computed) with `computedFrom()` | Derive values from multiple stores |

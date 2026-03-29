@@ -1,8 +1,8 @@
 ---
-title: "Persist"
-description: "Automatically save and restore store state to localStorage or custom storage"
-icon: "floppy-disk"
+sidebar_position: 1
 ---
+
+# Persist
 
 ```typescript
 import { createStore, persist } from '@sinuxjs/core';

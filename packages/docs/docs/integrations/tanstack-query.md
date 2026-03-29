@@ -1,8 +1,8 @@
 ---
-title: "TanStack Query"
-description: "Use Sinux signals as the interface for TanStack Query server state"
-icon: "server"
+sidebar_position: 1
 ---
+
+# TanStack Query
 
 Sinux signals as the single interface for both client and server state.
 

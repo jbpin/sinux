@@ -1,8 +1,8 @@
 ---
-title: "Todo App"
-description: "Complete example with store, React components, computed values, and persist middleware"
-icon: "list-check"
+sidebar_position: 1
 ---
+
+# Todo App
 
 Complete example: store + React components + persist.
 

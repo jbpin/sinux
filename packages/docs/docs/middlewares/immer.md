@@ -1,8 +1,8 @@
 ---
-title: "Immer"
-description: "Write mutable-style signal handlers that produce immutable state"
-icon: "pen"
+sidebar_position: 3
 ---
+
+# Immer
 
 ```typescript
 import { createStore, immer } from '@sinuxjs/core';

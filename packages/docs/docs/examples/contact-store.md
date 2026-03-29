@@ -1,8 +1,8 @@
 ---
-title: "Contact Store"
-description: "Async operations with store-to-store communication"
-icon: "address-book"
+sidebar_position: 2
 ---
+
+# Contact Store
 
 Async operations with store-to-store communication.
 
@@ -50,4 +50,4 @@ Demonstrates:
 
 - Async signal handlers with Promises
 - Multiple arguments per signal
-- The [command pipeline](/concepts/signals): add more handlers with `contactStore.add.add(handler)`
+- The [command pipeline](/docs/concepts/signals): add more handlers with `contactStore.add.add(handler)`
