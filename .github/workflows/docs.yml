@@ -30,8 +30,11 @@ jobs:
 
       - run: yarn --frozen-lockfile
 
-      - name: Build docs
-        run: cd packages/docs && npm run build
+      - name: Export docs
+        working-directory: packages/docs
+        run: |
+          npx mintlify export --output export.zip
+          unzip -o export.zip -d out
 
       - uses: actions/configure-pages@v4
         with:
@@ -39,7 +42,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: packages/docs/build
+          path: packages/docs/out
 
       - id: deployment
         uses: actions/deploy-pages@v4

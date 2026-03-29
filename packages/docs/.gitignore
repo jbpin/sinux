@@ -3,6 +3,8 @@
 
 # Mintlify
 .mintlify
+export.zip
+out/
 
 # Misc
 .DS_Store

@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "mintlify dev",
-    "build": "mintlify build",
+    "build": "mintlify export",
     "start": "mintlify dev",
+    "validate": "mintlify validate",
     "broken-links": "mintlify broken-links"
   },
   "devDependencies": {
