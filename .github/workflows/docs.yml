@@ -36,6 +36,25 @@ jobs:
           npx mintlify export --output export.zip
           unzip -o export.zip -d out
 
+      - name: Rewrite paths for /sinux base
+        working-directory: packages/docs
+        run: |
+          BASE="/sinux"
+          find out -name '*.html' -exec sed -i \
+            -e "s|href=\"/|href=\"${BASE}/|g" \
+            -e "s|src=\"/|src=\"${BASE}/|g" \
+            -e "s|content=\"/|content=\"${BASE}/|g" \
+            -e "s|href=\"${BASE}${BASE}/|href=\"${BASE}/|g" \
+            -e "s|src=\"${BASE}${BASE}/|src=\"${BASE}/|g" \
+            -e "s|content=\"${BASE}${BASE}/|content=\"${BASE}/|g" \
+            -e "s|href=\"${BASE}/https|href=\"https|g" \
+            -e "s|content=\"${BASE}/https|content=\"https|g" \
+            {} +
+          find out -name '*.js' -exec sed -i \
+            -e "s|\"/_next/|\"${BASE}/_next/|g" \
+            -e "s|\"/_mintlify/|\"${BASE}/_mintlify/|g" \
+            {} +
+
       - uses: actions/configure-pages@v4
         with:
           enablement: true
