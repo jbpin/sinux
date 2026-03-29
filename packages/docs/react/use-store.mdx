@@ -1,0 +1,39 @@
+---
+title: "useStore"
+description: "React hook for subscribing to store state with selectors"
+icon: "hook"
+---
+
+```tsx
+import { useStore } from '@sinuxjs/react';
+
+function UserProfile() {
+  // Full state
+  const state = useStore(userStore);
+
+  // With selector (recommended — group fields, destructure the result)
+  const { name, email } = useStore(userStore, s => ({ name: s.name, email: s.email }));
+
+  // With custom equality
+  const { items } = useStore(store, s => ({ items: s.items }), (a, b) => a.items.length === b.items.length);
+}
+```
+
+- Uses `useSyncExternalStoreWithSelector` internally — concurrent-safe
+- Selectors prevent unnecessary re-renders (only re-renders when selected value changes)
+- Custom `equalityFn` for advanced comparison
+- **Group related fields in a single selector** — avoid calling `useStore` multiple times on the same store
+
+<Warning>
+**Signals are not state.** Never destructure signals from the store. Always call them directly: `userStore.updateName('Jane')`, not `const { updateName } = userStore`.
+</Warning>
+
+## API
+
+```typescript
+function useStore<T, U>(
+  store: Store<T>,
+  selector?: (state: T) => U,
+  equalityFn?: (a: U, b: U) => boolean
+): U
+```

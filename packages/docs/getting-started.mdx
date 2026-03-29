@@ -1,0 +1,51 @@
+---
+title: "Getting Started"
+description: "Install Sinux and create your first store in under 5 minutes"
+icon: "rocket"
+---
+
+## Step 1: Install
+
+```bash
+npm install @sinuxjs/core @sinuxjs/react
+```
+
+## Step 2: Create a store
+
+```typescript
+import { createStore } from '@sinuxjs/core';
+
+const todoStore = createStore(
+  { todos: [], filter: 'all' },
+  {
+    addTodo: (state, text: string) => ({
+      todos: [...state.todos, { id: Date.now(), text, done: false }]
+    }),
+    toggleTodo: (state, id: number) => ({
+      todos: state.todos.map(t => t.id === id ? { ...t, done: !t.done } : t)
+    }),
+    setFilter: (state, filter: string) => ({ filter }),
+  }
+);
+```
+
+## Step 3: Use in React
+
+```tsx
+import { useStore } from '@sinuxjs/react';
+
+function TodoList() {
+  const { todos } = useStore(todoStore, s => ({ todos: s.todos }));
+  return (
+    <ul>
+      {todos.map(t => (
+        <li key={t.id} onClick={() => todoStore.toggleTodo(t.id)}>
+          {t.done ? '✓' : '○'} {t.text}
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+That's it. Learn more about [Stores](/concepts/store) and [Signals](/concepts/signals).

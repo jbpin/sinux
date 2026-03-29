@@ -16,7 +16,7 @@ Core metaphor: **Signal in, state out.**
 | **Law of Pragnanz** | Keep every page as simple as possible. One concept per page. Feature cards use 3 items, not 5. Diagrams use minimal shapes. The logo is a sine wave ending in an arrow — nothing extra. |
 | **Law of Similarity** | All code examples use the same structure: import, create, use. All API pages follow the same template. Consistent patterns let users transfer knowledge across pages. |
 | **Von Restorff Effect** | Key concepts (signals, stores, middleware) are highlighted with the accent color (Signal Pink `#FD79A8`). Important warnings and tips use distinct callout blocks so they stand out from body text. |
-| **Jakob's Law** | Follow Docusaurus conventions. Users expect a sidebar, a search bar, light/dark toggle, and "Edit this page" links. Don't reinvent navigation — leverage familiarity. |
+| **Jakob's Law** | Follow Mintlify conventions. Users expect a sidebar, a search bar, light/dark toggle, and "Edit this page" links. Don't reinvent navigation — leverage familiarity. |
 | **Miller's Law** | No more than 7 items in any navigation section. The sidebar has 6 top-level entries. Feature cards show 3 items. API tables chunk parameters into logical groups. |
 | **Hick's Law** | Reduce choices at every step. The landing page has one CTA: "Get Started." The sidebar guides a linear path from intro to advanced. No decision paralysis. |
 | **Serial Position Effect** | Put the most important items first and last in every list. "Getting Started" is first in the sidebar. "Examples" is last — users remember beginnings and endings. |

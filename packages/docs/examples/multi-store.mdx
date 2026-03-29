@@ -1,0 +1,131 @@
+---
+title: "Multi-Store Triggering"
+description: "Orchestrate workflows across multiple stores from a single signal"
+icon: "diagram-project"
+---
+
+One signal dispatching actions across multiple stores — orchestrating a workflow from a single entry point.
+
+```typescript
+import { createStore } from '@sinuxjs/core';
+
+// Auth store — manages the current user
+const authStore = createStore(
+  { user: null as { id: string; name: string } | null, token: null as string | null },
+  {
+    login: async (state, email: string, password: string) => {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
+      const { user, token } = await res.json();
+      return { user, token };
+    },
+    logout: () => ({ user: null, token: null }),
+  }
+);
+
+// Notification store — manages toast messages
+const notificationStore = createStore(
+  { messages: [] as { id: number; text: string }[] },
+  {
+    add: (state, text: string) => ({
+      messages: [...state.messages, { id: Date.now(), text }],
+    }),
+    dismiss: (state, id: number) => ({
+      messages: state.messages.filter(m => m.id !== id),
+    }),
+  }
+);
+
+// Cart store — manages shopping cart
+const cartStore = createStore(
+  { items: [] as { productId: string; qty: number }[] },
+  {
+    load: async (state) => {
+      const res = await fetch('/api/cart');
+      return { items: await res.json() };
+    },
+    clear: () => ({ items: [] }),
+  }
+);
+```
+
+## Chaining stores in a signal handler
+
+A signal handler can call other stores' signals. Since signals return Promises, you `await` them.
+
+```typescript
+// When the user logs in, also load their cart and show a notification
+authStore.login.add(async (state, email, password) => {
+  // The primary login handler already ran and updated authStore.
+  // Now trigger side effects on other stores:
+  await cartStore.load();
+  await notificationStore.add(`Welcome back, ${authStore.getState().user?.name}!`);
+
+  // Return void — we don't need to update authStore again
+});
+```
+
+```typescript
+// When the user logs out, clear the cart and notify
+authStore.logout.add(async (state) => {
+  await cartStore.clear();
+  await notificationStore.add('You have been logged out.');
+});
+```
+
+## Using generators
+
+Generators offer a cleaner syntax for sequential store orchestration with `yield`:
+
+```typescript
+authStore.login.add((state, email, password) => {
+  return function* () {
+    yield cartStore.load();
+    yield notificationStore.add(`Welcome back!`);
+  }();
+});
+```
+
+Each `yield` awaits the other store's signal before continuing. The generator's return value (if any) becomes the state update for `authStore`.
+
+## React: subscribing to multiple stores
+
+Use [`combine`](/react/combine) to subscribe to all three stores at once:
+
+```tsx
+import { combine, useStores } from '@sinuxjs/react';
+
+const appState = combine(authStore, notificationStore, cartStore);
+
+function Header() {
+  const { user, messages, items } = useStores(appState, (s) => ({
+    user: s.user,
+    messages: s.messages,
+    items: s.items,
+  }));
+
+  return (
+    <header>
+      <span>{user?.name ?? 'Guest'}</span>
+      <span>{items.length} items in cart</span>
+      {messages.map(m => (
+        <div key={m.id} onClick={() => notificationStore.dismiss(m.id)}>
+          {m.text}
+        </div>
+      ))}
+    </header>
+  );
+}
+```
+
+## Patterns
+
+| Pattern | When to use |
+|---------|------------|
+| `store.signal.add(handler)` | Stack side effects on an existing signal (command pipeline) |
+| `await otherStore.signal()` inside a handler | Trigger another store from within a signal |
+| Generators with `yield` | Sequential multi-store orchestration |
+| `combine()` + `useStores()` | Subscribe to multiple stores in one component |
+| [computed](/concepts/computed) with `computedFrom()` | Derive values from multiple stores |
